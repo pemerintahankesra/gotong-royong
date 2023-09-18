@@ -13,4 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
+Route::get('/', function(){
+  return redirect()->route('dashboard');
+});
+Route::controller(App\Http\Controllers\AuthController::class)->prefix('auth')->name('auth.')->group(function(){
+  Route::middleware('guest')->group(function(){
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login-action', 'login_action')->name('login_action');
+    Route::get('/reset-password', 'reset_password')->name('reset_password');
+    Route::post('/reset-password-action', 'reset_password_action')->name('reset_password_action');
+  });
+});
+
+Route::middleware('auth')->group(function(){
+  Route::controller(App\Http\Controllers\AuthController::class)->prefix('auth')->name('auth.')->group(function(){
+    Route::post('/logout-action', 'logout_action')->name('logout_action');
+    Route::get('/change-password', 'change_password')->name('change_password');
+    Route::get('/change-password-action', 'change_password_action')->name('change_password_action=');
+  });
+
+  Route::controller(App\Http\Controllers\DashboardController::class)->name('dashboards.')->group(function(){
+    Route::get('/dashboard', 'index')->name('index');
+  });
+});

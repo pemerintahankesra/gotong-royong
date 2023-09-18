@@ -1,0 +1,15 @@
+body {
+  font-size: 16px;
+  line-height: 1.1rem;
+}
+
+.login {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url("../../assets/img/auth/login-page.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}/*# sourceMappingURL=login.css.map */
