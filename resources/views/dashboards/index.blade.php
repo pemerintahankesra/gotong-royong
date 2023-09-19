@@ -5,9 +5,9 @@
         <h1>Dashboard</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Pages</li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
+            <li class="breadcrumb-item">Master</li>
+            <li class="breadcrumb-item active">Donatur</li>
           </ol>
         </nav>
       </div>

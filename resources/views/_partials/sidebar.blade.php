@@ -17,8 +17,8 @@
               </a>
             </li>
             <li>
-              <a href="#">
-                <i class="bi bi-circle"></i><span>Perusahaan</span>
+              <a href="{{route('donatur.index')}}">
+                <i class="bi bi-circle"></i><span>Donatur</span>
               </a>
             </li>
           </ul>

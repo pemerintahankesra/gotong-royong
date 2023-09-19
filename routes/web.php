@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function(){
-  return redirect()->route('dashboard');
+  return redirect()->route('dashboards.index');
 });
 Route::controller(App\Http\Controllers\AuthController::class)->prefix('auth')->name('auth.')->group(function(){
   Route::middleware('guest')->group(function(){
@@ -35,4 +35,7 @@ Route::middleware('auth')->group(function(){
   Route::controller(App\Http\Controllers\DashboardController::class)->name('dashboards.')->group(function(){
     Route::get('/dashboard', 'index')->name('index');
   });
+
+  Route::resource('/donatur', App\Http\Controllers\DonaturController::class)->except('show');
+  Route::get('/donatur/data', [App\Http\Controllers\DonaturController::class, 'data'])->name('donatur.data');
 });
