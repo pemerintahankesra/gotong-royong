@@ -24,7 +24,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="index.html">
+          <a class="nav-link collapsed" href="{{route('bantuan.index')}}">
             <i class="ri-hand-heart-line"></i>
             <span>Input Bantuan</span>
           </a>

@@ -35,7 +35,11 @@ Route::middleware('auth')->group(function(){
   Route::controller(App\Http\Controllers\DashboardController::class)->name('dashboards.')->group(function(){
     Route::get('/dashboard', 'index')->name('index');
   });
-
-  Route::resource('/donatur', App\Http\Controllers\DonaturController::class)->except('show');
+  
   Route::get('/donatur/data', [App\Http\Controllers\DonaturController::class, 'data'])->name('donatur.data');
+  Route::resource('/donatur', App\Http\Controllers\DonaturController::class)->except('show');
+  Route::get('/bantuan/data', [App\Http\Controllers\BantuanController::class, 'data'])->name('bantuan.data');
+  Route::resource('/bantuan', App\Http\Controllers\BantuanController::class)->except('show');
 });
+
+Route::get('/data/get_kelurahan', [App\Http\Controllers\DataController::class, 'get_kelurahan'])->name('data.get_kelurahan');

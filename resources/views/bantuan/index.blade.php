@@ -8,12 +8,12 @@
 
 @section('content')
       <div class="pagetitle">
-        <h1>Data Donatur</h1>
+        <h1>Data Bantuan</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
             <li class="breadcrumb-item">Pages</li>
-            <li class="breadcrumb-item active">Donatur</li>
+            <li class="breadcrumb-item active">Bantuan</li>
           </ol>
         </nav>
       </div>
@@ -22,11 +22,6 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body pt-2">
-                @if(Auth::user()->role != 1)
-                <div class="d-grid">
-                  <a href="{{route('donatur.create')}}" class="btn btn-primary my-3">Tambah Donatur</a>
-                </div>
-                @endif
                 <table class="table table-stripped table-hover" id="datatable">
                   <thead>
                     <tr>
@@ -34,7 +29,6 @@
                       <th>Kecamatan</th>
                       <th>Kelurahan</th>
                       <th>Donatur</th>
-                      <th>Alamat</th>
                       <th>#</th>
                     </tr>
                   </thead>
@@ -55,7 +49,7 @@
     <script>
       $('#datatable').DataTable({
         "ajax" : {
-          "url" : "{{route('donatur.data')}}",
+          "url" : "{{route('bantuan.data')}}",
           "type" : "GET",
           "dataType" : "JSON",
           "data" : function(d){
@@ -66,11 +60,12 @@
           {data: 'DT_RowIndex', className: 'align-middle', name: 'DT_RowIndex'},
           {data : 'kecamatan'},
           {data : 'kelurahan'},
-          {data : 'donatur'},
-          {data : 'alamat'},
+          {render : function(data, type, row){
+            var html = '<span class="fw-bold">Donatur</span> : ';
+          }},
           {className : 'justify-content-center d-flex', render : function(data, type, row){
-            var html = '<a href="/donatur/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-            html += '<form method="post" action="/donatur/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+            var html = '<a href="/bantuan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
+            html += '<form method="post" action="/bantuan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
             return html;
           }}
         ]
