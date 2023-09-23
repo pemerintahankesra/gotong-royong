@@ -21,10 +21,10 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="card">
-              <div class="card-body pt-2">
+              <div class="card-body pt-3">
                 @if(Auth::user()->role != 1)
                 <div class="d-grid">
-                  <a href="{{route('donatur.create')}}" class="btn btn-primary my-3">Tambah Donatur</a>
+                  <a href="{{route('donatur.create')}}" class="btn btn-primary mb-3">Tambah Donatur</a>
                 </div>
                 @endif
                 <table class="table table-stripped table-hover" id="datatable">

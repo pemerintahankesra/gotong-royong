@@ -38,8 +38,27 @@ Route::middleware('auth')->group(function(){
   
   Route::get('/donatur/data', [App\Http\Controllers\DonaturController::class, 'data'])->name('donatur.data');
   Route::resource('/donatur', App\Http\Controllers\DonaturController::class)->except('show');
-  Route::get('/bantuan/data', [App\Http\Controllers\BantuanController::class, 'data'])->name('bantuan.data');
-  Route::resource('/bantuan', App\Http\Controllers\BantuanController::class)->except('show');
+  Route::controller(App\Http\Controllers\BantuanController::class)->prefix('bantuan')->name('bantuan.')->group(function(){
+    Route::get('/data', 'data')->name('data');
+    Route::get('/{kategori}', 'create')->name('create');
+  });
+  Route::resource('/bantuan', App\Http\Controllers\BantuanController::class)->except('create');
+  Route::controller(App\Http\Controllers\DistribusiController::class)->prefix('distribusi')->name('distribusi.')->group(function(){
+    Route::get('/data', 'data')->name('data');
+    Route::get('/{kategori}', 'create')->name('create');
+  });
+  Route::resource('/distribusi', App\Http\Controllers\DistribusiController::class)->except('create');
 });
 
-Route::get('/data/get_kelurahan', [App\Http\Controllers\DataController::class, 'get_kelurahan'])->name('data.get_kelurahan');
+Route::controller(App\Http\Controllers\DataController::class)->prefix('data')->name('data.')->group(function(){
+  Route::get('/get-kelurahan', 'get_kelurahan')->name('get_kelurahan');
+  Route::get('/get-donatur', 'get_donatur')->name('get_donatur');
+  Route::get('/get-asw-id', 'get_asw_id')->name('get_asw_id');
+  Route::get('/get-balita-stunting', 'get_balita_stunting')->name('get_balita_stunting');
+  Route::get('/get-permakanan', 'get_permakanan')->name('get_permakanan');
+  Route::get('/get-beasiswa', 'get_beasiswa')->name('get_beasiswa');
+  Route::get('/get-rutilahu', 'get_rutilahu')->name('get_rutilahu');
+  Route::get('/get-jamban', 'get_jamban')->name('get_jamban');
+  Route::get('/get-bumil-resti', 'get_bumil_resti')->name('get_bumil_resti');
+  Route::get('/get-cekin', 'get_cekin')->name('get_cekin');
+});

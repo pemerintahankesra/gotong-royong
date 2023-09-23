@@ -30,7 +30,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="index.html">
+          <a class="nav-link collapsed" href="{{route('distribusi.index')}}">
             <i class="ri-luggage-cart-line"></i>
             <span>Distribusi Bantuan</span>
           </a>

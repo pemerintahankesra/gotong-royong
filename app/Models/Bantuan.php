@@ -14,4 +14,8 @@ class Bantuan extends Model
     public function detil_bantuan(){
         return $this->hasMany(DetilBantuan::class);
     }
+
+    public function donatur(){
+        return $this->belongsTo(Donatur::class);
+    }
 }
