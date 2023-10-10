@@ -9,4 +9,8 @@ class DetilDistribusi extends Model
 {
     use HasFactory;
     protected $table = 'detil_distribusi';
+
+    public function distribusi(){
+        return $this->belongsTo(Distribusi::class);
+    }
 }

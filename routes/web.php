@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function(){
   Route::resource('/bantuan', App\Http\Controllers\BantuanController::class)->except('create');
   Route::controller(App\Http\Controllers\DistribusiController::class)->prefix('distribusi')->name('distribusi.')->group(function(){
     Route::get('/data', 'data')->name('data');
+    Route::get('/penerima', 'penerima')->name('penerima');
+    Route::get('/penerima/create', 'create_penerima')->name('create.penerima');
+    Route::post('/penerima', 'store_penerima')->name('store.penerima');
+    Route::delete('/penerima/{id}', 'destroy_penerima')->name('destroy.penerima');
     Route::get('/{kategori}', 'create')->name('create');
   });
   Route::resource('/distribusi', App\Http\Controllers\DistribusiController::class)->except('create');

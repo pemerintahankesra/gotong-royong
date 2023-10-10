@@ -58,7 +58,8 @@ class DataController extends Controller
     if($data->data){
       $penerima = $data->data[0];
       $penerima->flag_surabaya = 0;
-      $penerima->cek_program = Penerima::join('distribusi', 'distribusi.penerima_id', '=', 'penerima.id')
+      $penerima->cek_program = Penerima::join('detil_distribusi', 'penerima.id', '=', 'detil_distribusi.penerima_id')
+      ->join('distribusi', 'distribusi.id', '=', 'detil_distribusi.distribusi_id')
       ->where('distribusi.program_id', '<>', $request->program_id)
       ->where('nik', $request->nik)->count();
 
@@ -77,7 +78,8 @@ class DataController extends Controller
         $penerima->kecamatan_dom = $stunting->kecamatandomisili;
         $penerima->kelurahan_dom = $stunting->kelurahandomisili;
         $penerima->flag_surabaya = 1;
-        $penerima->cek_program = Penerima::join('distribusi', 'distribusi.penerima_id', '=', 'penerima.id')
+        $penerima->cek_program = Penerima::join('detil_distribusi', 'penerima.id', '=', 'detil_distribusi.penerima_id')
+        ->join('distribusi', 'distribusi.id', '=', 'detil_distribusi.distribusi_id')
         ->where('distribusi.program_id', '<>', $request->program_id)
         ->where('nik', $request->nik)->count();
 

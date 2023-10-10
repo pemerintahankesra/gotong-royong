@@ -6,3 +6,5 @@
     <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     @yield('css_plugins')
     <link href="/assets/css/style.css" rel="stylesheet">
+
+    <script src="/assets/plugins/jquery-3.7.1.min.js"></script>

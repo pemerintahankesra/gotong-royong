@@ -8,7 +8,7 @@
 
 @section('content')
       <div class="pagetitle">
-        <h1>Data Distribusi Bantuan</h1>
+        <h1>Data Distribusi Bantuan (Barang)</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
@@ -23,8 +23,7 @@
             <div class="card">
               <div class="card-body pt-3">
                 <div class="row">
-                  <div class="col-md-6 d-grid mb-3"><a href="/distribusi/uang" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Berdasarkan Dana Gotong Royong di BSP</a></div>
-                  <div class="col-md-6 d-grid mb-3"><a href="/distribusi/barang" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Sumber dari Stok Barang</a></div>
+                  <div class="col-md-12 d-grid mb-3"><a href="/distribusi/barang" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Buat Laporan Distribusi Bantuan Barang</a></div>
                 </div>
                 <table class="table table-stripped table-hover" id="datatable">
                   <thead>

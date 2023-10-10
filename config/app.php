@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Yajra Laravel DataTable
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class
     ])->toArray(),
 
     /*
@@ -185,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
     ])->toArray(),
 
 ];
