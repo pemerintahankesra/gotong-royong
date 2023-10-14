@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('penerima', function (Blueprint $table) {
@@ -19,14 +17,14 @@ return new class extends Migration
             $table->string('alamatdomisili');
             $table->text('kecamatandomisili');
             $table->text('kelurahandomisili');
+            $table->string('alamatktp');
+            $table->text('kecamatanktp');
+            $table->text('kelurahanktp');
             $table->string('flag_surabaya', 1);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('penerima');

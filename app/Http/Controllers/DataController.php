@@ -19,7 +19,8 @@ class DataController extends Controller
 
   public function get_donatur(Request $request){
     $donatur = Donatur::where('region_id', $request->kelurahan_id)->get();
-    return json_encode([
+    return response()->json([
+      'success' => true,
       'data' => $donatur,
     ], 200);
   }
@@ -57,7 +58,7 @@ class DataController extends Controller
 
     if($data->data){
       $penerima = $data->data[0];
-      $penerima->flag_surabaya = 0;
+      $penerima->flag_surabaya = 1;
       $penerima->cek_program = Penerima::join('detil_distribusi', 'penerima.id', '=', 'detil_distribusi.penerima_id')
       ->join('distribusi', 'distribusi.id', '=', 'detil_distribusi.distribusi_id')
       ->where('distribusi.program_id', '<>', $request->program_id)
@@ -77,7 +78,7 @@ class DataController extends Controller
         $penerima->alamat_dom = $stunting->alamatdomisili;
         $penerima->kecamatan_dom = $stunting->kecamatandomisili;
         $penerima->kelurahan_dom = $stunting->kelurahandomisili;
-        $penerima->flag_surabaya = 1;
+        $penerima->flag_surabaya = 0;
         $penerima->cek_program = Penerima::join('detil_distribusi', 'penerima.id', '=', 'detil_distribusi.penerima_id')
         ->join('distribusi', 'distribusi.id', '=', 'detil_distribusi.distribusi_id')
         ->where('distribusi.program_id', '<>', $request->program_id)

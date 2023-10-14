@@ -120,23 +120,21 @@ function calculateTotal(rowId) {
 function get_cart_distribusi(){
   let user_id = $('#user_id').val();
 
-  $.get('/distribusi/penerima', function(response){
-    let result = JSON.parse(response);
-    console.log(result.jumlah);
+  $.get('/distribusi/penerima', function(result){
     if(result.jumlah > 0){
       $('#content_detil_penerima > tr').remove();
       let html = '';
       result.data.forEach((data, index) => {
         html += '<tr>';
         html += '<td class="text-center">'+(index+1)+'</td>';
-        html += '<td>'+data.name+'</td>';
+        html += '<td>'+data.name+'<br><small>Alamat Domisili : '+data.attributes.alamat_domisili+', '+data.attributes.kelurahan_domisili+', '+data.attributes.kecamatan_domisili+'</small><br><small>Alamat KTP : '+data.attributes.alamat_ktp+', '+data.attributes.kelurahan_ktp+', '+data.attributes.kecamatan_ktp+'</small></td>';
         html += '<td><ul class="mb-0">'
         data.attributes.kategori.forEach((kategori, a) => {
           html += '<li>'+kategori+' ('+data.attributes.item[a]+') sejumlah '+data.attributes.jumlah[a]+'</li>';
         });
         html += '</ul></td>'
         html += '<td>'+data.price+'</td>';
-        html += '<td><div class="d-grid"><button class="btn btn-warning">Edit</button><form data-action="/distribusi/penerima/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'"><input type="hidden" name="_method" value="DELETE"><button onclick="deletePenerima(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
+        html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditPenerima('+data.id+')">Edit</button><form data-action="/distribusi/penerima/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deletePenerima(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
         html += '</tr>';  
       })
       $('#content_detil_penerima').append(html);

@@ -35,8 +35,8 @@ Route::middleware('auth')->group(function(){
   Route::controller(App\Http\Controllers\DashboardController::class)->name('dashboards.')->group(function(){
     Route::get('/dashboard', 'index')->name('index');
   });
-  
   Route::get('/donatur/data', [App\Http\Controllers\DonaturController::class, 'data'])->name('donatur.data');
+  Route::post('/donatur/store', [App\Http\Controllers\DonaturController::class, 'store_on_modal'])->name('donatur.store.modal');
   Route::resource('/donatur', App\Http\Controllers\DonaturController::class)->except('show');
   Route::controller(App\Http\Controllers\BantuanController::class)->prefix('bantuan')->name('bantuan.')->group(function(){
     Route::get('/data', 'data')->name('data');
@@ -48,10 +48,19 @@ Route::middleware('auth')->group(function(){
     Route::get('/penerima', 'penerima')->name('penerima');
     Route::get('/penerima/create', 'create_penerima')->name('create.penerima');
     Route::post('/penerima', 'store_penerima')->name('store.penerima');
+    Route::get('/penerima/{id}/edit', 'edit_penerima')->name('edit.penerima');
+    Route::put('/penerima/{id}', 'update_penerima')->name('update.penerima');
     Route::delete('/penerima/{id}', 'destroy_penerima')->name('destroy.penerima');
-    Route::get('/{kategori}', 'create')->name('create');
+    Route::get('/create', 'create')->name('create');
+    Route::get('/{id}/edit', 'edit')->name('edit');
   });
   Route::resource('/distribusi', App\Http\Controllers\DistribusiController::class)->except('create');
+  Route::resource('/penarikan', App\Http\Controllers\DistribusiController::class);
+  Route::controller(App\Http\Controllers\PenarikanController::class)->prefix('penarikan')->name('penarikan.')->group(function(){
+    Route::get('/data', 'data')->name('data');
+    Route::get('/pelaporan', 'pelaporan')->name('pelaporan');
+    // Route::get('/pelaporan/create', 'create_pelapo')
+  });
 });
 
 Route::controller(App\Http\Controllers\DataController::class)->prefix('data')->name('data.')->group(function(){

@@ -8,7 +8,7 @@
 
 @section('content')
       <div class="pagetitle">
-        <h1>Data Distribusi Bantuan</h1>
+        <h1>Data Pengajuan Penarikan Uang ke BSP</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>

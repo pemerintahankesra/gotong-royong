@@ -35,12 +35,12 @@
           </a>
           <ul id="penarikan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-              <a href="#">
+              <a href="{{route('penarikan.index')}}">
                 <i class="bi bi-circle"></i><span>Pengajuan Penarikan</span>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{{route('penarikan.pelaporan')}}">
                 <i class="bi bi-circle"></i><span>Pelaporan Distribusi Bantuan Uang</span>
               </a>
             </li>

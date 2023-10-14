@@ -32,7 +32,6 @@ function get_donatur(kelurahan){
       kelurahan_id : kelurahan,
     },
     success : function(response){
-      response = JSON.parse(response);
       var data = response.data;
       var select = $('#donatur');
       select.find('option').remove();
@@ -134,7 +133,8 @@ function getDataByNIK(value){
     if(response.message == 'success'){
       let data = response.data;
       // Cek Warga Surabaya
-      if(data.flag_surabaya == 1){
+      console.log(data.flag_surabaya);
+      if(data.flag_surabaya == 0){
         Swal.fire({
           title: 'Anda yakin?',
           text: "Berdasarkan data Aplikasi Cek In Warga, warga tersebut kemungkinan tidak termasuk Warga Surabaya!",
@@ -191,7 +191,17 @@ $('#kecamatan').select2({
   placeholder : 'Pilih Kecamatan'
 });
 
+$('#kecamatanDonatur').select2({
+  theme : 'bootstrap-5',
+  placeholder : 'Pilih Kecamatan'
+});
+
 $('#kelurahan').select2({
+  theme : 'bootstrap-5',
+  placeholder : 'Pilih Kelurahan'
+});
+
+$('#kelurahanDonatur').select2({
   theme : 'bootstrap-5',
   placeholder : 'Pilih Kelurahan'
 });

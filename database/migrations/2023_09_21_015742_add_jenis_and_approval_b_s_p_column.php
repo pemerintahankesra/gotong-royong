@@ -6,22 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::table('bantuan', function (Blueprint $table) {
             $table->after('bukti', function(Blueprint $table){
-                $table->string('jenis');
-                $table->integer('approval_bsp');
+                $table->string('jenis')->nullable();
+                $table->integer('approval_bsp')->default(0);
             });
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('bantuan', function (Blueprint $table) {

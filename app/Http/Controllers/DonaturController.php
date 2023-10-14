@@ -47,6 +47,19 @@ class DonaturController extends Controller
     return redirect()->route('donatur.index');
   }
 
+  public function store_on_modal(StoreRequest $request){
+    $donatur = new Donatur;
+    $donatur->region_id = $request->kelurahan;
+    $donatur->nama = $request->donatur;
+    $donatur->alamat = $request->alamat;
+    $donatur->saveOrFail();
+
+    return response()->json([
+      'success' => true,
+      'donatur' => $donatur,
+    ], 200);
+  }
+
   public function edit(string $id){
     $donatur = Donatur::findOrFail($id);
     $kecamatan = Region::where('level', 1)->orderBy('name', 'asc')->get();

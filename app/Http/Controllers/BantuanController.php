@@ -22,13 +22,12 @@ class BantuanController extends Controller
         $bantuan = Bantuan::select('bantuan.id', 'kec.name as kecamatan', 'kel.name as kelurahan', 'd.nama as donatur', 'alamat', 'jenis', 'p.name as program', 'approval_bsp', 'tanggal')
         ->join('donatur as d', 'd.id', '=', 'bantuan.donatur_id')
         ->join('program as p', 'p.id', '=', 'bantuan.program_id')
-        ->join('users as u', 'u.id', '=', 'bantuan.tagged_by')
-        ->join('regions as kel', 'kel.id', '=', 'u.region_id')
+        ->join('regions as kel', 'kel.id', '=', 'bantuan.tagged_by')
         ->join('regions as kec', 'kec.id', '=', 'kel.sub_id')
         ->with('detil_bantuan');
-        if($user->role == 2){
+        if($user->role == 'Kecamatan'){
         $bantuan = $bantuan->where('kel.sub_id', $user->region_id);
-        } else if($user->role == 3){
+        } else if($user->role == 'Kelurahan'){
         $bantuan = $bantuan->where('u.id', $user->id);
         }
         $bantuan = $bantuan->get();
@@ -41,11 +40,22 @@ class BantuanController extends Controller
     public function create($kategori)
     {
         if($kategori == 'uang' || $kategori == 'barang'){
-            $kecamatan = Region::where('level', 1)->orderBy('name', 'asc')->get();
-            $program = Program::all();
+            $kecamatan = Region::where(['level' => 1, 'status' => 1]);
+            $kelurahan = Region::where(['level' => 2, 'status' => 1]);
+            if(Auth::user()->role == 'Kecamatan'){
+                $kecamatan = $kecamatan->where('id', Auth::user()->region_id);
+                $kelurahan = $kelurahan->where('sub_id', Auth::user()->region_id);
+            } else if(Auth::user()-> role == 'Kelurahan'){
+                $kecamatan = $kecamatan->where('id', Auth::user()->wilayah->sub_id);
+                $kelurahan = $kelurahan->where('id', Auth::user()->region_id);
+            }
+            $kecamatan = $kecamatan->orderBy('name', 'asc')->get();
+            $kelurahan = $kelurahan->orderBy('name', 'asc')->get();
+            $program = Program::orderBy('id')->get();
 
             return view(($kategori == 'uang' ? 'bantuan.create_uang' : 'bantuan.create_barang'), [
                 'kecamatan' => $kecamatan,
+                'kelurahan' => $kelurahan,
                 'program' => $program,
             ]);
         }

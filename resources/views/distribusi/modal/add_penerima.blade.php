@@ -1,6 +1,5 @@
 <form data-action="/distribusi/penerima" method="post" id="formAddPenerima">
   @csrf
-  <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-4">
@@ -73,7 +72,6 @@
               @error('kelurahan_penerima')
               <div class="invalid-feedback">{{$message}}</div>
               @enderror
-              <input type="hidden" name="flag_surabaya" id="flag_surabaya">
             </td>
             <th class="align-middle">Kelurahan Domisili</th>
             <td class="align-middle">:</td>

@@ -25,19 +25,18 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body pt-2">
-          <form action="{{route('distribusi.store')}}" class="row g-2" method="post">
+          <form action="{{route('distribusi.store')}}" class="row g-2" method="POST" id="formDistribusi">
             @csrf
             <div class="col-md-12">
               <input type="hidden" id="user_id" value="{{Auth::user()->id}}">
               <div class="row">
-                <input type="hidden" name="jenis" value="{{$jenis}}">
                 <div class="col-md-2">
                   <label for="tanggal" class="form-label">Tanggal Distribusi Bantuan</label>
                   <input type="date" name="tanggal" id="tanggal" class="form-control" max="{{date('Y-m-d')}}">
                 </div>
                 <div class="col-md-3">
                   <label for="kecamatan" class="form-label">Kecamatan</label>
-                  <select name="kecamatan" id="kecamatan" class="form-select @error('kecamatan')is-invalid @enderror" onchange="get_asw_id('kecamatan', this.value); get_kelurahan(this.value)" onchange="check_cart()">
+                  <select name="kecamatan" id="kecamatan" class="form-select @error('kecamatan')is-invalid @enderror" onchange="get_asw_id('kecamatan', this.value); get_kelurahan(this.value)">
                     <option></option>
                     @foreach($kecamatan as $kec)
                     <option value="{{$kec->id}}" {{old('kecamatan') ? 'selected' : ''}}>Kec. {{$kec->name}}</option>
@@ -52,7 +51,7 @@
                 </div>
                 <div class="col-md-3">
                   <label for="kelurahan" class="form-label">Kelurahan</label>
-                  <select name="kelurahan" id="kelurahan" class="form-select @error('kelurahan')is-invalid @enderror" onchange="get_asw_id('kelurahan', this.value); get_donatur(this.value)" onchange="check_cart()">
+                  <select name="kelurahan" id="kelurahan" class="form-select @error('kelurahan')is-invalid @enderror" onchange="get_asw_id('kelurahan', this.value); get_donatur(this.value)">
                     <option></option>
                   </select>
                   <input type="hidden" name="kelurahan_id" id="kelurahan_id">
@@ -64,7 +63,7 @@
                 </div>
                 <div class="col-md-4">
                   <label for="program" class="form-label">Program</label>
-                  <select name="program" id="program" class="form-select @error('program')is-invalid @enderror" onchange="check_cart()">
+                  <select name="program" id="program" class="form-select @error('program')is-invalid @enderror">
                     <option></option>
                     @foreach($program as $prog)
                     <option value="{{$prog->id}}">{{$prog->name}}</option>
@@ -105,16 +104,15 @@
                 </tfoot>
               </table>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-12">
               <label for="keterangan" class="form-label">Keterangan Tambahan <span class="fst-italic text-danger">(Opsional)</span></label>
               <textarea name="keterangan" id="keterangan" rows="3" class="form-control @error('keterangan')is-invalid @enderror"></textarea>
             </div>
             <div class="col-md-6 d-grid">
-              @method('DELETE')
               <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
             <div class="col-md-6 d-grid">
-              <a href="{{route('donatur.index')}}" class="btn btn-light border">Kembali</a>
+              <a href="{{route('distribusi.index')}}" class="btn btn-light border">Kembali</a>
             </div>
           </form>
         </div>
@@ -149,8 +147,7 @@
 
 @section('scripts')
 <script>
-  $(function() { //otomatis aktif ketika page di jalankan
-    //fungsi untuk load csrf token
+  $(function() {
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -159,25 +156,6 @@
   });
 
   get_cart_distribusi();
-
-  function check_cart(){
-    cart = {{count(Cart::session(Auth::user()->id)->getContent())}};
-    if(cart > 0){
-      Swal.fire({
-        icon: 'warning',
-        title: 'Hati-hati',
-        text: 'Anda yakin ingin merubah program, karena akan menghapus data penerima yang telah ditambahkan?',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, saya yakin!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          
-        }
-      })
-    }
-  }
 
   function btnPenerima(){
     let kecamatan = $('#kecamatan_id').val();
@@ -193,10 +171,16 @@
 
       return false;
     }
-  
     $('#modalTambahPenerima').modal('toggle');
     $('#contentModalPenerima').load('/distribusi/penerima/create');
     get_daftar_penerima();
+  }
+  
+  function btnEditPenerima(id){
+    event.preventDefault();
+
+    $('#modalTambahPenerima').modal('toggle');
+    $('#contentModalPenerima').load('/distribusi/penerima/'+id+'/edit');
   }
 
   function deletePenerima(form_id){
@@ -214,9 +198,6 @@
       contentType: false,
       cache: false,
       processData: false,
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
-      },
       success:function(response)
       {
         get_cart_distribusi();
@@ -225,6 +206,14 @@
         console.log(response)
       }
     });
+  }
+
+  function submitDistribusi(form_id){
+    event.preventDefault();
+
+    let form = $('#'+form_id);
+    let url = form.attr('action');
+    console.log(url);
   }
 </script>
 @endsection

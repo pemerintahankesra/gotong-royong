@@ -15,11 +15,7 @@ class Distribusi extends Model
         return $this->hasMany(DetilDistribusi::class);
     }
 
-    public function penerima(){
-        return $this->belongsTo(Penerima::class);
-    }
-
     public function tagged(){
-        return $this->belongsTo(User::class, 'tagged_by', 'id');
+        return $this->belongsTo(Region::class, 'tagged_by', 'id');
     }
 }

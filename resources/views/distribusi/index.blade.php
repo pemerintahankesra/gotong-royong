@@ -23,18 +23,17 @@
             <div class="card">
               <div class="card-body pt-3">
                 <div class="row">
-                  <div class="col-md-12 d-grid mb-3"><a href="/distribusi/barang" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Buat Laporan Distribusi Bantuan Barang</a></div>
+                  <div class="col-md-12 d-grid mb-3"><a href="/distribusi/create" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Buat Laporan Distribusi Bantuan Barang</a></div>
                 </div>
                 <table class="table table-stripped table-hover" id="datatable">
                   <thead>
                     <tr>
                       <th class="text-center">No</th>
+                      <th class="text-center">Tanggal Pemberian</th>
                       <th class="text-center">Kecamatan</th>
                       <th class="text-center">Kelurahan</th>
-                      <th class="text-center">Donatur</th>
-                      <th class="text-center">Tanggal Pemberian</th>
-                      <th class="text-center">Peruntukan</th>
-                      <th class="text-center">Approval BSP</th>
+                      <th class="text-center">Bantuan</th>
+                      <th class="text-center">Program</th>
                       <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
@@ -66,52 +65,23 @@
         },
         "columns" : [
           {data: 'DT_RowIndex', className: 'text-center', name: 'DT_RowIndex'},
+          {data : 'tanggal', className: 'text-center'},
           {data : 'kecamatan'},
           {data : 'kelurahan'},
-          {data : 'donatur'},
-          {data : 'tanggal', className: 'text-center'},
-          {render : function(data, type, row){
-            var detil = row.detil_bantuan;
-            var html = '<p>'+row.program+'</p>';
-            if(row.jenis == 'Uang Tunai'){
-              html += detil[0].item+' : Rp. '+currency.format(detil[0].nominal);
-            } else {
-              html += '<ol class="mb-0">';
-                detil.forEach(function(data){
-                  html += '<li style="margin-left:-1rem;">'+data.kategori+' ('+data.item+') : '+data.jumlah+' item</li>'
-                })
-              html += '</ol>';
-            }
+          {render: function(data, type, row){
+            let detil = row.detil_distribusi;
+            let html = '<ul class="mb-0">';
+            detil.forEach(function(data){
+              html += '<li>'+data.kategori+' ('+data.item+') sejumlah '+data.jumlah+' <br>Penerima : '+data.namalengkap+'</li>';
+            })
+            html += '</ul>'
             return html;
           }},
-          {
-            className: 'text-center', render : function(data, type, row){
-              var span, status, html;
-              if(row.jenis == 'Uang Tunai'){
-                if(row.approval_bsp == 0){
-                  span = 'bg-secondary';
-                  status = 'Sedang Verifikasi';
-                } else if(row.approval_bsp == 1){
-                  span = 'bg-success';
-                  status = 'Telah Diterima';
-                } else if(row.approval_bsp == 2){
-                  span = 'bg-warning';
-                  status = 'Dikembalikan / Perlu Perbaikan';
-                } else if(row.approval_bsp == 3){
-                  span = 'bg-danger';
-                  status = 'Ditolak';
-                }
-                html = '<span class="badge '+span+'">'+status+'</span>';
-              } else {
-                html = '-'
-              }
-              return html;
-            }
-          },
+          {data : 'program', className: 'text-center'},
           {render : function(data, type, row){
             var html = '<div class="d-flex justify-content-center">';
-            html += '<a href="/bantuan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-            html += '<form method="post" action="/bantuan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+            html += '<a href="/distribusi/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
+            html += '<form method="post" action="/distribusi/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
             html += '</div>';
             return html;
           }}
