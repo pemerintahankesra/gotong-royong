@@ -29,14 +29,14 @@
             <span>Input Bantuan</span>
           </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#penarikan-nav" data-bs-toggle="collapse" href="#">
-            <i class="bx bx-money"></i><span>Pengajuan Penarikan Uang ke BSP</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="bx bx-money"></i><span>Penarikan Uang</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="penarikan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
               <a href="{{route('penarikan.index')}}">
-                <i class="bi bi-circle"></i><span>Pengajuan Penarikan</span>
+                <i class="bi bi-circle"></i><span>Pengajuan Penarikan Uang ke BSP</span>
               </a>
             </li>
             <li>
@@ -45,7 +45,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> --}}
         <li class="nav-item">
           <a class="nav-link collapsed" href="{{route('distribusi.index')}}">
             <i class="ri-luggage-cart-line"></i>

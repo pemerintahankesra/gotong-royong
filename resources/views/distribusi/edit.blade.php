@@ -3,9 +3,9 @@
 @section('title', 'Distribusi Bantuan Baru')
 
 @section('css_plugins')
-<link rel="stylesheet" href="/assets/plugins/select2-4.0.13/dist/css/select2.min.css">
-    <link rel="stylesheet" href="/assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css">
-    <link rel="stylesheet" href="/assets/plugins/sweetalert/sweetalert2.min.css">
+<link rel="stylesheet" href="assets/plugins/select2-4.0.13/dist/css/select2.min.css">
+    <link rel="stylesheet" href="assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css">
+    <link rel="stylesheet" href="assets/plugins/sweetalert/sweetalert2.min.css">
 @endsection
 
 @section('content')
@@ -142,11 +142,11 @@
 @endsection
 
 @section('js_plugins')
-<script src="/assets/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
-<script src="/assets/plugins/jquery.mask.min.js"></script>
-<script src="/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="/assets/js/form_penerima.js"></script>
-<script src="/assets/js/cmb.js"></script>
+<script src="assets/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
+<script src="assets/plugins/jquery.mask.min.js"></script>
+<script src="assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="assets/js/form_penerima.js"></script>
+<script src="assets/js/cmb.js"></script>
 @endsection
 
 @section('scripts')

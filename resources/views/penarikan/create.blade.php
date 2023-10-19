@@ -3,20 +3,20 @@
 @section('title', 'Distribusi Bantuan Baru')
 
 @section('css_plugins')
-<link rel="stylesheet" href="/assets/plugins/select2-4.0.13/dist/css/select2.min.css">
-    <link rel="stylesheet" href="/assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css">
-    <link rel="stylesheet" href="/assets/plugins/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{}}assets/plugins/select2-4.0.13/dist/css/select2.min.css">
+    <link rel="stylesheet" href="assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css">
+    <link rel="stylesheet" href="assets/plugins/sweetalert/sweetalert2.min.css">
 @endsection
 
 @section('content')
 <div class="pagetitle">
-  <h1>Distribusi Bantuan Barang Baru</h1>
+  <h1>Pengajuan Penarikan Uang ke BSP</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
       <li class="breadcrumb-item">Pages</li>
-      <li class="breadcrumb-item"><a href="{{route('distribusi.index')}}">Pengajuan Penarikan Uang ke BSP</a></li>
-      <li class="breadcrumb-item active">Distribusi Bantuan Barang Baru</li>
+      <li class="breadcrumb-item"><a href="{{route('distribusi.index')}}">Penarikan Uang</a></li>
+      <li class="breadcrumb-item active">Pengajuan Penarikan Uang ke BSP</li>
     </ol>
   </nav>
 </div>
@@ -25,13 +25,13 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body pt-2">
-          <form action="{{route('distribusi.store')}}" class="row g-2" method="POST" id="formDistribusi">
+          <form action="{{route('penarikan.store')}}" class="row g-2" method="POST" id="formDistribusi">
             @csrf
             <div class="col-md-12">
               <input type="hidden" id="user_id" value="{{Auth::user()->id}}">
               <div class="row">
                 <div class="col-md-2">
-                  <label for="tanggal" class="form-label">Tanggal Distribusi Bantuan</label>
+                  <label for="tanggal" class="form-label">Tanggal Pengajuan</label>
                   <input type="date" name="tanggal" id="tanggal" class="form-control" max="{{date('Y-m-d')}}">
                 </div>
                 <div class="col-md-3">
@@ -96,8 +96,13 @@
                 <tfoot>
                   <tr>
                     <td colspan="5">
-                      <div class="d-grid">
-                        <button class="btn btn-light border" type="button" onclick="btnPenerima()"><i class="bx bxs-user-plus"></i> Tambah Penerima</button>
+                      <div class="row">
+                        <div class="col-md-6 d-grid">
+                          <button class="btn btn-light border" type="button" onclick="btnPenerima()"><i class="bx bxs-user-plus"></i> Tambah Kebutuhan Dana berdasarkan Penerima</button>
+                        </div>
+                        <div class="col-md-6 d-grid">
+                          <button class="btn btn-light border" type="button" onclick="btnPenerima()"><i class="bx bxs-box"></i> Tambah Kebutuhan Dana berdasarkan Barang</button>
+                        </div>
                       </div>
                     </td>
                   </tr>

@@ -55,11 +55,15 @@ Route::middleware('auth')->group(function(){
     Route::get('/{id}/edit', 'edit')->name('edit');
   });
   Route::resource('/distribusi', App\Http\Controllers\DistribusiController::class)->except('create');
-  Route::resource('/penarikan', App\Http\Controllers\DistribusiController::class);
+  Route::resource('/penarikan', App\Http\Controllers\PenarikanController::class);
   Route::controller(App\Http\Controllers\PenarikanController::class)->prefix('penarikan')->name('penarikan.')->group(function(){
     Route::get('/data', 'data')->name('data');
     Route::get('/pelaporan', 'pelaporan')->name('pelaporan');
-    // Route::get('/pelaporan/create', 'create_pelapo')
+    Route::get('/by-person/create', 'create_penerima')->name('create.penerima');
+    Route::post('/by-person', 'store_penerima')->name('store.penerima');
+    Route::get('/by-person/{id}/edit', 'edit_penerima')->name('edit.penerima');
+    Route::put('/by-person/{id}', 'update_penerima')->name('update.penerima');
+    Route::delete('/by-person/{id}', 'destroy_penerima')->name('destroy.penerima');
   });
 });
 

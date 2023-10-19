@@ -23,8 +23,7 @@
             <div class="card">
               <div class="card-body pt-3">
                 <div class="row">
-                  <div class="col-md-6 d-grid mb-3"><a href="/distribusi/uang" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Berdasarkan Dana Gotong Royong di BSP</a></div>
-                  <div class="col-md-6 d-grid mb-3"><a href="/distribusi/barang" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Sumber dari Stok Barang</a></div>
+                  <div class="col d-grid mb-3"><a href="/penarikan/create" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Buat Pengajuan Penarikan Uang ke BSP</a></div>
                 </div>
                 <table class="table table-stripped table-hover" id="datatable">
                   <thead>
