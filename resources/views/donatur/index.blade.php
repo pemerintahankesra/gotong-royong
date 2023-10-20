@@ -3,7 +3,7 @@
 @section('title', 'Data Donatur')
 
 @section('css_plugins')
-    <link href="assets/plugins/DataTables-1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="{{asset('assets/plugins/DataTables-1.13.6/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -47,8 +47,8 @@
 @endsection
 
 @section('js_plugins')
-    <script src="assets/plugins/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="assets/plugins/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{asset('assets/plugins/DataTables-1.13.6/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/DataTables-1.13.6/js/dataTables.bootstrap5.min.js')}}"></script>
 @endsection
 
 @section('scripts')

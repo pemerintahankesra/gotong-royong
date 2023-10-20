@@ -3,8 +3,8 @@
 @section('title', 'Data Donatur')
 
 @section('css_plugins')
-<link rel="stylesheet" href="assets/plugins/select2-4.0.13/dist/css/select2.min.css">
-    <link rel="stylesheet" href="assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css">
+<link rel="stylesheet" href="{{asset('assets/plugins/select2-4.0.13/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css')}}">
 @endsection
 
 @section('content')
@@ -84,11 +84,11 @@
 @endsection
 
 @section('js_plugins')
-<script src="assets/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
+<script src="{{asset('assets/plugins/select2-4.0.13/dist/js/select2.min.js')}}"></script>
+<script src="{{asset('assets/js/cmb.js')}}"></script>
 @endsection
 
 @section('scripts')
-<script src="assets/js/cmb.js"></script>
 <script>
   $('#kecamatan').select2({
     theme : 'bootstrap-5',

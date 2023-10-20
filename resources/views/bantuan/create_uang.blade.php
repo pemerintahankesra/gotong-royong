@@ -2,11 +2,6 @@
 
 @section('title', 'Tambah Bantuan Uang')
 
-@section('css_plugins')
-<link rel="stylesheet" href="/assets/plugins/select2-4.0.13/dist/css/select2.min.css">
-    <link rel="stylesheet" href="/assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css">
-@endsection
-
 @section('content')
 <div class="pagetitle">
   <h1>Tambah Bantuan Berupa Uang</h1>
@@ -202,13 +197,11 @@
 @endsection
 
 @section('js_plugins')
-<script src="/assets/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
-<script src="/assets/plugins/jquery.mask.min.js"></script>
-<script src="/assets/js/modal.js"></script>
+<script src="{{asset('assets/js/modal.js')}}"></script>
+<script src="{{asset('assets/js/cmb.js')}}"></script>
 @endsection
 
 @section('scripts')
-<script src="/assets/js/cmb.js"></script>
 <script>
   $('#nominal').mask('0,000,000,000,000,000', { reverse: true });
 </script>

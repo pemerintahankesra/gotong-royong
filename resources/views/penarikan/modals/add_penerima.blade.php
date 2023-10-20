@@ -126,4 +126,4 @@
   </div>
 </form>
 
-<script src="/assets/js/form_penerima.js"></script>
+<script src="{{asset('assets/js/form_penerima.js')}}"></script>

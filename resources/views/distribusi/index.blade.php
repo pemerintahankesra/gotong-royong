@@ -2,10 +2,6 @@
 
 @section('title', 'Data Distribusi Bantuan')
 
-@section('css_plugins')
-    <link href="assets/plugins/DataTables-1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-@endsection
-
 @section('content')
       <div class="pagetitle">
         <h1>Data Distribusi Bantuan (Barang)</h1>
@@ -43,11 +39,6 @@
           </div>
         </div>
       </section>
-@endsection
-
-@section('js_plugins')
-    <script src="assets/plugins/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="assets/plugins/DataTables-1.13.6/js/dataTables.bootstrap5.min.js"></script>
 @endsection
 
 @section('scripts')
