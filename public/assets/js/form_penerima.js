@@ -21,6 +21,29 @@ $('#formAddPenerima').on('submit', function(event){
   });
 })
 
+$('#formAddRealisasi').on('submit', function(event){
+  event.preventDefault();
+
+  var url = $(this).attr('data-action');
+  $.ajax({
+    url: url,
+    method: 'POST',
+    data: new FormData(this),
+    dataType: 'JSON',
+    contentType: false,
+    cache: false,
+    processData: false,
+    success:function(response)
+    {
+      $('#modalTambahPenerima').modal('toggle');
+      get_cart_penarikan();
+    },
+    error: function(response) {
+      console.log(response)
+    }
+  });
+})
+
 $('.keterangan-bantuan, .jumlah-bantuan, .nominal-bantuan').on('input', function() {
   var rowId = $(this).closest('tr').attr('id');
   calculateTotal(rowId);
@@ -137,6 +160,51 @@ function get_cart_distribusi(){
         html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditPenerima('+data.id+')">Edit</button><form data-action="/distribusi/penerima/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deletePenerima(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
         html += '</tr>';  
       })
+      $('#content_detil_penerima').append(html);
+    } else {
+      $('#content_detil_penerima > tr').remove();
+      $('#content_detil_penerima').append('<tr><td colspan="5" class="text-center"><small class="fst-italic">Belum Ada Penerima yang Ditambahkan</small></td></tr>');
+    };
+  })
+}
+
+function get_cart_penarikan(){
+  let user_id = $('#user_id').val();
+
+  $.get('/penarikan/rencana-realisasi', function(result){
+    if(result.jumlah > 0){
+      $('#content_detil_penerima > tr').remove();
+      let html = '';
+      let total = 0;
+      result.data.forEach((data, index) => {
+        if(data.attributes.jenis == 'penerima'){
+          html += '<tr>';
+          html += '<td class="text-center">'+(index+1)+'</td>';
+          html += '<td>'+data.name+'<br><small>Alamat Domisili : '+data.attributes.alamat_domisili+', '+data.attributes.kelurahan_domisili+', '+data.attributes.kecamatan_domisili+'</small><br><small>Alamat KTP : '+data.attributes.alamat_ktp+', '+data.attributes.kelurahan_ktp+', '+data.attributes.kecamatan_ktp+'</small></td>';
+          html += '<td><ul class="mb-0">'
+          data.attributes.kategori.forEach((kategori, a) => {
+            html += '<li>'+kategori+' ('+data.attributes.item[a]+') sejumlah '+data.attributes.jumlah[a]+' dengan harga satuan Rp. '+data.attributes.nominal[a]+'</li>';
+          });
+          html += '</ul></td>'
+          html += '<td class="text-end">'+data.price.toLocaleString('en-US')+'</td>';
+          html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditRencanaRealisasi('+data.id+')">Edit</button><form data-action="/penarikan/rencana-realisasi/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deleteRencanaRealisasi(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
+          html += '</tr>';
+        } else if(data.attributes.jenis == 'barang'){
+          html += '<tr>';
+          html += '<td class="text-center">'+(index+1)+'</td>';
+          html += '<td> - </td>';
+          html += '<td>'+data.name+' sejumlah '+data.quantity+' dengan harga satuan Rp. '+data.attributes.nominal+'</td>';
+          html += '<td class="text-end">'+data.price.toLocaleString('en-US')+'</td>';
+          html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditRencanaRealisasi('+data.id+')">Edit</button><form data-action="/penarikan/rencana-realisasi/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deleteRencanaRealisasi(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
+          html += '</tr>';  
+        }
+        total += data.price;
+      })
+      html += '<tr>';
+      html += '<td class="fw-bold" colspan="3">Total Dana yang akan dicairkan</td>';
+      html += '<td class="text-end fw-bold">'+total.toLocaleString('en-US')+'</td>';
+      html += '<td></td>';
+      html += '</tr>';  
       $('#content_detil_penerima').append(html);
     } else {
       $('#content_detil_penerima > tr').remove();

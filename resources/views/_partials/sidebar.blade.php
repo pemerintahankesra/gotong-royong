@@ -11,11 +11,11 @@
             <i class="bi bi-menu-button-wide"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="master-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
+            {{-- <li>
               <a href="#">
                 <i class="bi bi-circle"></i><span>Barang</span>
               </a>
-            </li>
+            </li> --}}
             <li>
               <a href="{{route('donatur.index')}}">
                 <i class="bi bi-circle"></i><span>Donatur</span>
@@ -29,7 +29,7 @@
             <span>Input Bantuan</span>
           </a>
         </li>
-        {{-- <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#penarikan-nav" data-bs-toggle="collapse" href="#">
             <i class="bx bx-money"></i><span>Penarikan Uang</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
@@ -45,7 +45,7 @@
               </a>
             </li>
           </ul>
-        </li> --}}
+        </li>
         <li class="nav-item">
           <a class="nav-link collapsed" href="{{route('distribusi.index')}}">
             <i class="ri-luggage-cart-line"></i>

@@ -12,6 +12,12 @@
         <label for="nik" class="form-label">NIK (Nomor Induk Kependudukan)</label>
         <input type="text" name="nik" id="nik" class="form-control" readonly onchange="getDataByNIK(this.value)">
       </div>
+      <div class="col-md-4 d-flex align-items-center" id="loading-data">
+        <svg class="spinner" viewBox="0 0 50 50">
+          <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="8"></circle>
+        </svg>
+        &nbsp; Sedang mengambil data...
+      </div>
     </div>
   </div>
   <div class="col-md-12">

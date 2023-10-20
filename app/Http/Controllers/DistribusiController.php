@@ -50,7 +50,7 @@ class DistribusiController extends Controller
             $kecamatan = $kecamatan->where('id', Auth::user()->wilayah->sub_id);
         }
         $kecamatan = $kecamatan->orderBy('name', 'asc')->get();
-        $cart = Cart::session(Auth::user()->id)->getContent();
+        $cart = Cart::session('distribusi-'.Auth::user()->id)->getContent();
 
         return view('distribusi.create', [
             'program' => $program,
@@ -67,7 +67,7 @@ class DistribusiController extends Controller
         $distribusi->tagged_by = $request->kelurahan;
         $distribusi->save();
 
-        $carts = Cart::session(Auth::user()->id)->getContent();
+        $carts = Cart::session('distribusi-'.Auth::user()->id)->getContent();
         foreach ($carts as $cart){
             foreach($cart->attributes->kategori as $i => $kategori){
                 $penerima = Penerima::where('nik', $cart->id)->first();
@@ -98,15 +98,14 @@ class DistribusiController extends Controller
             }
         }
 
-        Cart::session(Auth::user()->id)->clear();
+        Cart::session('distribusi-'.Auth::user()->id)->clear();
 
         return redirect()->route('distribusi.index');
     }
 
     public function edit(string $id)
     {
-        Cart::session(Auth::user()->id)->clear();
-        // dd(Cart::session(Auth::user()->id)->getContent());
+        Cart::session('distribusi-'.Auth::user()->id)->clear();
 
         $program = Program::orderBy('id', 'asc')->get();
         $kecamatan = Region::where('level', 1);
@@ -144,7 +143,7 @@ class DistribusiController extends Controller
                 array_push($total_nominal, $d->total_nominal);
             }
 
-            Cart::session(Auth::user()->id)->add([
+            Cart::session('distribusi-'.Auth::user()->id)->add([
                 'id' => $pen->nik,
                 'name' => $pen->namalengkap,
                 'quantity' => 1,
@@ -171,7 +170,7 @@ class DistribusiController extends Controller
             'kecamatan' => $kecamatan,
             'kelurahan' => $kelurahan,
             'distribusi' => $distribusi,
-            'cart' => Cart::session(Auth::user()->id)->getContent(),
+            'cart' => Cart::session('distribusi-'.Auth::user()->id)->getContent(),
         ]);
     }
 
@@ -185,7 +184,7 @@ class DistribusiController extends Controller
 
         $detil = DetilDistribusi::where('distribusi_id', $id)->delete();
 
-        $carts = Cart::session(Auth::user()->id)->getContent();
+        $carts = Cart::session('distribusi-'.Auth::user()->id)->getContent();
         foreach ($carts as $cart){
             foreach($cart->attributes->kategori as $i => $kategori){
                 $penerima = Penerima::where('nik', $cart->id)->first();
@@ -216,7 +215,7 @@ class DistribusiController extends Controller
             }
         }
 
-        Cart::session(Auth::user()->id)->clear();
+        Cart::session('distribusi-'.Auth::user()->id)->clear();
 
         return redirect()->route('distribusi.index');
     }
@@ -235,7 +234,7 @@ class DistribusiController extends Controller
     public function penerima(){
         $carts = [];
 
-        Cart::session(Auth::user()->id)->getContent()->each(function($item) use (&$carts)
+        Cart::session('distribusi-'.Auth::user()->id)->getContent()->each(function($item) use (&$carts)
         {
             $carts[] = $item;
         });
@@ -247,7 +246,7 @@ class DistribusiController extends Controller
     }
 
     public function store_penerima(PenerimaStoreRequest $request){
-        Cart::session(Auth::user()->id)->add([
+        Cart::session('distribusi-'.Auth::user()->id)->add([
             'id' => $request->nik,
             'name' => $request->nama_penerima,
             'quantity' => 1,
@@ -270,12 +269,12 @@ class DistribusiController extends Controller
 
         return response()->json([
             'success' => true,
-            'cart' => Cart::getContent(),
+            'cart' => Cart::session('distribusi-'.Auth::user()->id)->getContent(),
         ], 200);
     }
 
     public function edit_penerima($id){
-        $cart = Cart::session(Auth::user()->id)->get($id);
+        $cart = Cart::session('distribusi-'.Auth::user()->id)->get($id);
 
         return view('distribusi.modal.edit_penerima', [
             'cart' => $cart,
@@ -284,7 +283,7 @@ class DistribusiController extends Controller
     }
 
     public function update_penerima(Request $request, $id){
-        Cart::session(Auth::user()->id)->update($id, [
+        Cart::session('distribusi-'.Auth::user()->id)->update($id, [
             'attributes' => [
                 'alamat_domisili' => $request->alamat_penerima,
                 'alamat_ktp' => $request->alamat_ktp,
@@ -309,11 +308,11 @@ class DistribusiController extends Controller
     }
 
     public function destroy_penerima($id){
-        Cart::session(Auth::user()->id)->remove($id);
+        Cart::session('distribusi-'.Auth::user()->id)->remove($id);
 
         return response()->json([
             'message' => 'success',
-            'card' => Cart::getContent(),
+            'card' => Cart::session('distribusi-'.Auth::user()->id)->getContent(),
         ], 200);
     }
 }

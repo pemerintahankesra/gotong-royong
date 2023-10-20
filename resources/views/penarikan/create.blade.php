@@ -84,24 +84,22 @@
                     <th>No</th>
                     <th>Nama Penerima</th>
                     <th>Bantuan yang diterima</th>
-                    <th>Total Nominal Bantuan</th>
+                    <th>Total Nominal Bantuan (Rp)</th>
                     <th>#</th>
                   </tr>
                 </thead>
                 <tbody id="content_detil_penerima">
-                  {{-- <tr>
-                    <td colspan="5" class="text-center"><small class="fst-italic">Belum Ada Penerima yang Ditambahkan</small></td>
-                  </tr> --}}
+
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="5">
                       <div class="row">
                         <div class="col-md-6 d-grid">
-                          <button class="btn btn-light border" type="button" onclick="btnPenerima()"><i class="bx bxs-user-plus"></i> Tambah Kebutuhan Dana berdasarkan Penerima</button>
+                          <button class="btn btn-light border" type="button" onclick="modal_realisasi('penerima')"><i class="bx bxs-user-plus"></i> Tambah Kebutuhan Dana berdasarkan Penerima</button>
                         </div>
                         <div class="col-md-6 d-grid">
-                          <button class="btn btn-light border" type="button" onclick="btnPenerima()"><i class="bx bxs-box"></i> Tambah Kebutuhan Dana berdasarkan Barang</button>
+                          <button class="btn btn-light border" type="button" onclick="modal_realisasi('barang')"><i class="bx bxs-box"></i> Tambah Kebutuhan Dana berdasarkan Barang</button>
                         </div>
                       </div>
                     </td>
@@ -148,6 +146,7 @@
 <script src="{{asset('assets/plugins/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script src="{{asset('assets/js/form_penerima.js')}}"></script>
 <script src="{{asset('assets/js/cmb.js')}}"></script>
+<script src="{{asset('assets/js/modal.js')}}"></script>
 @endsection
 
 @section('scripts')
@@ -160,35 +159,16 @@
     });
   });
 
-  get_cart_distribusi();
-
-  function btnPenerima(){
-    let kecamatan = $('#kecamatan_id').val();
-    let kelurahan = $('#kelurahan_id').val();
-    let program = $('#program').val();
-
-    if(kecamatan == '' || kelurahan == '' || program == 'program'){
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Data Kecamatan / Kelurahan / Program belum Dipilih!',
-      })
-
-      return false;
-    }
-    $('#modalTambahPenerima').modal('toggle');
-    $('#contentModalPenerima').load('/distribusi/penerima/create');
-    get_daftar_penerima();
-  }
+  get_cart_penarikan();
   
-  function btnEditPenerima(id){
+  function btnEditRencanaRealisasi(id){
     event.preventDefault();
 
     $('#modalTambahPenerima').modal('toggle');
-    $('#contentModalPenerima').load('/distribusi/penerima/'+id+'/edit');
+    $('#contentModalPenerima').load('/penarikan/penerima/'+id+'/edit');
   }
 
-  function deletePenerima(form_id){
+  function deleteRencanaRealisasi(form_id){
     event.preventDefault();
     let form = $('#'+form_id);
     var url = form.attr('data-action');
@@ -205,7 +185,7 @@
       processData: false,
       success:function(response)
       {
-        get_cart_distribusi();
+        get_cart_penarikan();
       },
       error: function(response) {
         console.log(response)

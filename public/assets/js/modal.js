@@ -43,3 +43,27 @@ $('#formModalTambahDonatur').submit(function(){
     }
   })
 })
+
+// Modal Realisasi
+function modal_realisasi(kategori){
+  let kecamatan = $('#kecamatan_id').val();
+  let kelurahan = $('#kelurahan_id').val();
+  let program = $('#program').val();
+
+  if(kecamatan == '' || kelurahan == '' || program == 'program'){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Data Kecamatan / Kelurahan / Program belum Dipilih!',
+    })
+
+    return false;
+  }
+  $('#modalTambahPenerima').modal('toggle');
+  if(kategori == 'penerima'){
+    $('#contentModalPenerima').load('/penarikan/rencana-realisasi/penerima/create');
+    get_daftar_penerima();
+  } else if(kategori == 'barang') {
+    $('#contentModalPenerima').load('/penarikan/rencana-realisasi/barang/create');
+  }
+}

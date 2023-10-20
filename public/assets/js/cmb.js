@@ -126,6 +126,9 @@ function getDataByNIK(value){
   if(value == ''){
     return false;
   }
+
+  $('#loading-data').removeClass('d-none');
+
   $.get('/data/get-cekin', {
     'nik' : value,
     'program_id' : $('#program').val(),
@@ -183,6 +186,8 @@ function getDataByNIK(value){
         text: 'Data berdasarkan NIK yang diinputkan tidak ditemukan pada Aplikasi CekIn Warga. Mohon tambah / verifikasi terlebih dahulu pada Aplikasi CekIn Warga.',
       })
     }
+
+    $('#loading-data').addClass('d-none');
   })
 }
 
