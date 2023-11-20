@@ -1,7 +1,5 @@
 @extends('template')
 
-@section('title', 'Data Distribusi Bantuan')
-
 @section('content')
       <div class="pagetitle">
         <h1>Data Distribusi Bantuan (Barang)</h1>

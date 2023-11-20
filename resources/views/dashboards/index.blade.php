@@ -1,5 +1,5 @@
 @extends('template')
-@section('title', 'Dashboard')
+
 @section('content')
       <div class="pagetitle">
         <h1>Dashboard</h1>

@@ -2,12 +2,13 @@
 
 @section('content')
       <div class="pagetitle">
-        <h1>Data Bantuan</h1>
+        <h1>Verifikasi Bantuan Uang</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
             <li class="breadcrumb-item">Pages</li>
-            <li class="breadcrumb-item active">Bantuan</li>
+            <li class="breadcrumb-item">Bantuan</li>
+            <li class="breadcrumb-item active">Verifikasi Bantuan Uang</li>
           </ol>
         </nav>
       </div>
@@ -16,10 +17,6 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body pt-3">
-                <div class="row">
-                  <div class="col-md-6 d-grid mb-3"><a href="/bantuan/uang" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Tambah Bantuan Uang</a></div>
-                  <div class="col-md-6 d-grid mb-3"><a href="/bantuan/barang" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Tambah Bantuan Barang</a></div>
-                </div>
                 <table class="table table-stripped table-hover" id="datatable">
                   <thead>
                     <tr>
@@ -47,7 +44,7 @@
       
       $('#datatable').DataTable({
         "ajax" : {
-          "url" : "{{route('bantuan.data')}}",
+          "url" : "{{route('bantuan.verifikasi.data')}}",
           "type" : "GET",
           "dataType" : "JSON",
           "data" : function(d){
@@ -77,40 +74,33 @@
           {
             className: 'text-center', render : function(data, type, row){
               var span, status, html;
-              if(row.jenis == 'Uang Tunai'){
-                if(row.approval_bsp == 0){
-                  span = 'bg-secondary';
-                  status = 'Sedang Verifikasi';
-                } else if(row.approval_bsp == 11){
-                  span = 'bg-success';
-                  status = 'Telah Diterima';
-                } else if(row.approval_bsp == 20){
-                  span = 'bg-secondary';
-                  status = 'Sedang Verifikasi<br>(Telah dilakukan perbaikan)';
-                } else if(row.approval_bsp == 21){
-                  span = 'bg-warning';
-                  status = 'Dikembalikan / Perlu Perbaikan';
-                } else if(row.approval_bsp == 41){
-                  span = 'bg-danger';
-                  status = 'Ditolak';
-                }
-                html = '<span class="badge '+span+'">'+status+'</span>';
-              } else {
-                html = '-'
+              if(row.approval_bsp == 0){
+                span = 'bg-secondary';
+                status = 'Sedang Verifikasi';
+              } else if(row.approval_bsp == 11){
+                span = 'bg-success';
+                status = 'Telah Diterima';
+              } else if(row.approval_bsp == 20){
+                span = 'bg-secondary';
+                status = 'Sedang Verifikasi<br>(Telah dilakukan perbaikan)';
+              } else if(row.approval_bsp == 21){
+                span = 'bg-warning';
+                status = 'Dikembalikan / Perlu Perbaikan';
+              } else if(row.approval_bsp == 41){
+                span = 'bg-danger';
+                status = 'Ditolak';
               }
+              html = '<span class="badge '+span+'">'+status+'</span>';
               return html;
             }
           },
           {render : function(data, type, row){
             var html = '<div class="d-flex justify-content-center">';
-              if(row.approval_bsp == 0 || row.approval_bsp == 21){
-                html += '<a href="/bantuan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-                if(row.approval_bsp == 0){
-                  html += '<form method="post" action="/bantuan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
-                }
-              } else {
-                html += '-';
-              }
+            if(row.approval_bsp == 0 || row.approval_bsp == 20){
+              html += '<a href="/bantuan/verifikasi/uang/'+row.id+'" class="btn btn-success btn-sm mx-1">Verifikasi</a>';
+            } else {
+              html += '-'
+            }
             html += '</div>';
             return html;
           }}

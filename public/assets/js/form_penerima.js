@@ -44,6 +44,25 @@ $('#formAddRealisasi').on('submit', function(event){
   });
 })
 
+$('#formUploadLaporan').on('submit', function(event){
+  event.preventDefault();
+  var url = $(this).attr('data-action');
+  console.log(url);
+  $.ajax({
+    url : url,
+    method: 'POST',
+    data: new FormData(this),
+    dataType: 'JSON',
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function(response){
+      $('#modalUploadLaporan').modal('toggle');
+      $('#columnLaporan'+response.detil.id).html('<img src="/storage/'+response.detil.foto_laporan+'" alt="Laporan Realisasi Pencairan Dana" height="150px" width="auto">');
+    }
+  })
+})
+
 $('.keterangan-bantuan, .jumlah-bantuan, .nominal-bantuan').on('input', function() {
   var rowId = $(this).closest('tr').attr('id');
   calculateTotal(rowId);
@@ -105,6 +124,7 @@ function addRow(){
 
 function deleteRow(button){
   button.closest("tr").remove();
+  calculateGrandTotal();
 }
 
 function setUniqueIds() {
@@ -132,12 +152,21 @@ function calculateTotal(rowId) {
   $('#' + rowId + ' .total-bantuan').text(total.toLocaleString('en-US'));
   $('#' + rowId + ' .text-total-bantuan').val(total);
 
-  var totalPerBulan = 0;
-  $('input[name="total_nominal[]"]').each(function(){
-    totalPerBulan += parseInt($(this).val());
-  })
-  $('#textTotalNominalPerBulan').text(totalPerBulan.toLocaleString('en-US'));
-  $('#totalNominalPerBulan').val(totalPerBulan);
+  calculateGrandTotal();
+}
+
+function calculateGrandTotal(){
+  var total_nominal = $("input[name='total_nominal[]']").map(function(){return $(this).val();}).get();
+  
+  var grandTotal = 0;
+  total_nominal.forEach(function(total){
+    total = parseInt(total);
+    grandTotal += total;
+  });
+
+  $('#textTotalNominalPerBulan').text(grandTotal.toLocaleString('en-US'));
+  $('#totalNominalPerBulan').val(grandTotal);
+
 }
 
 function get_cart_distribusi(){
@@ -175,30 +204,33 @@ function get_cart_penarikan(){
     if(result.jumlah > 0){
       $('#content_detil_penerima > tr').remove();
       let html = '';
-      let total = 0;
+      var total = 0;
       result.data.forEach((data, index) => {
+        var price = parseInt(data.price);
         if(data.attributes.jenis == 'penerima'){
           html += '<tr>';
           html += '<td class="text-center">'+(index+1)+'</td>';
           html += '<td>'+data.name+'<br><small>Alamat Domisili : '+data.attributes.alamat_domisili+', '+data.attributes.kelurahan_domisili+', '+data.attributes.kecamatan_domisili+'</small><br><small>Alamat KTP : '+data.attributes.alamat_ktp+', '+data.attributes.kelurahan_ktp+', '+data.attributes.kecamatan_ktp+'</small></td>';
           html += '<td><ul class="mb-0">'
           data.attributes.kategori.forEach((kategori, a) => {
-            html += '<li>'+kategori+' ('+data.attributes.item[a]+') sejumlah '+data.attributes.jumlah[a]+' dengan harga satuan Rp. '+data.attributes.nominal[a]+'</li>';
+            var nominal = parseInt(data.attributes.nominal[a]);
+            html += '<li>'+kategori+' ('+data.attributes.item[a]+') sejumlah '+data.attributes.jumlah[a]+' dengan harga satuan Rp. '+nominal.toLocaleString('en-US')+'</li>';
           });
           html += '</ul></td>'
-          html += '<td class="text-end">'+data.price.toLocaleString('en-US')+'</td>';
-          html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditRencanaRealisasi('+data.id+')">Edit</button><form data-action="/penarikan/rencana-realisasi/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deleteRencanaRealisasi(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
+          html += '<td class="text-end">'+price.toLocaleString('en-US')+'</td>';
+          html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditRencanaRealisasi(\''+data.id+'\', \''+data.attributes.jenis+'\')">Edit</button><form data-action="/penarikan/rencana-realisasi/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deleteRencanaRealisasi(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
           html += '</tr>';
         } else if(data.attributes.jenis == 'barang'){
+          var nominal = parseInt(data.attributes.nominal);
           html += '<tr>';
           html += '<td class="text-center">'+(index+1)+'</td>';
           html += '<td> - </td>';
-          html += '<td>'+data.name+' sejumlah '+data.quantity+' dengan harga satuan Rp. '+data.attributes.nominal+'</td>';
-          html += '<td class="text-end">'+data.price.toLocaleString('en-US')+'</td>';
-          html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditRencanaRealisasi('+data.id+')">Edit</button><form data-action="/penarikan/rencana-realisasi/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deleteRencanaRealisasi(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
+          html += '<td>'+data.name+' sejumlah '+data.quantity+' dengan harga satuan Rp. '+nominal.toLocaleString('en-US')+'</td>';
+          html += '<td class="text-end">'+price.toLocaleString('en-US')+'</td>';
+          html += '<td><div class="d-grid"><button class="btn btn-warning mb-1" onclick="btnEditRencanaRealisasi(\''+data.id+'\', \''+data.attributes.jenis+'\')">Edit</button><form data-action="/penarikan/rencana-realisasi/'+data.id+'" method="POST" id="formDeletePenerima'+(index+1)+'" class="d-grid"><input type="hidden" name="_method" value="DELETE"><button onclick="deleteRencanaRealisasi(\'formDeletePenerima'+(index+1)+'\')" class="btn btn-danger">Hapus</button></form></div></td>';
           html += '</tr>';  
         }
-        total += data.price;
+        total += price;
       })
       html += '<tr>';
       html += '<td class="fw-bold" colspan="3">Total Dana yang akan dicairkan</td>';

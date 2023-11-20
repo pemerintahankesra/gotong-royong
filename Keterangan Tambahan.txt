@@ -1,0 +1,7 @@
+Keterangan Status Aproval BSP
+0 = Sedang Verifikasi
+11 = Proses Pencairan
+12 = Telah Dicairkan
+21 = Dikembalikan / Perlu Perbaikan
+20 = Sedang Verifikasi (Setelah Perbaikan)
+41 = Ditolak

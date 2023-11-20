@@ -112,11 +112,6 @@ class BantuanController extends Controller
         return abort(404);
     }
 
-    public function show(string $id)
-    {
-
-    }
-
     public function edit(string $id)
     {
         $bantuan = Bantuan::findOrFail($id);
@@ -141,8 +136,8 @@ class BantuanController extends Controller
         $bantuan->tagged_by = $request->kelurahan;
         $bantuan->program_id = $request->program;
         $bantuan->jenis = $request->jenis;
-        if($bantuan->approval_bsp == 2){
-            $bantuan->approval_bsp = 0;
+        if($bantuan->approval_bsp == 21){
+            $bantuan->approval_bsp = 20;
         }
         $bantuan->tanggal = $request->tanggal;
         $bukti = $request->bukti;

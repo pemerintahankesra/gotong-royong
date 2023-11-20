@@ -1,7 +1,5 @@
 @extends('template')
 
-@section('title', 'Tambah Bantuan Uang')
-
 @section('content')
 <div class="pagetitle">
   <h1>Edit Bantuan berupa Barang</h1>

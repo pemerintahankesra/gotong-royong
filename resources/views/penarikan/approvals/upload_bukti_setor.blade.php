@@ -1,0 +1,163 @@
+@extends('template')
+
+@section('css_plugins')
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2-4.0.13/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert/sweetalert2.min.css')}}">
+@endsection
+
+@section('content')
+<div class="pagetitle">
+  <h1>Upload Bukti Pencairan BSP</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
+      <li class="breadcrumb-item">Pages</li>
+      <li class="breadcrumb-item"><a href="{{route('penarikan.index')}}">Penarikan Uang</a></li>
+      <li class="breadcrumb-item active">Upload Bukti Pencairan BSP</li>
+    </ol>
+  </nav>
+</div>
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body pt-2">
+          <form action="{{route('penarikan.verifikasi.update', $penarikan->id)}}" class="row g-2" method="POST" id="formDistribusi" enctype="multipart/form-data">
+            @csrf
+            @method('put')
+            <div class="col-md-12">
+              <input type="hidden" id="user_id" value="{{Auth::user()->id}}">
+              <div class="row">
+                <div class="col-md-2">
+                  <label for="tanggal" class="form-label">Tanggal Pengajuan</label>
+                  <input type="date" class="form-control mb-2" max="{{date('Y-m-d')}}" value="{{$penarikan->tanggal_pengajuan}}" readonly>
+                </div>
+                <div class="col-md-3">
+                  <label for="kecamatan" class="form-label">Kecamatan</label>
+                  <input type="text" class="form-control mb-2" value="{{$penarikan->region->kecamatan->name}}" readonly>
+                </div>
+                <div class="col-md-3">
+                  <label for="kelurahan" class="form-label">Kelurahan</label>
+                  <input type="text" class="form-control mb-2" value="{{$penarikan->region->name}}" readonly>
+                </div>
+                <div class="col-md-4">
+                  <label for="program" class="form-label">Program</label>
+                  <input type="text" class="form-control mb-2" value="{{$penarikan->program->name}}" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 pt-2">
+              <table class="table table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Penerima</th>
+                    <th>Bantuan yang diterima</th>
+                    <th>Total Nominal Bantuan (Rp)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1?>
+                  @foreach(Cart::session('approval')->getContent() as $cart)
+                  <tr>
+                    <td>{{($i++)}}</td>
+                    @if($cart->attributes->jenis == 'penerima')
+                    <td>{{$cart->name}}</td>
+                    <td>
+                      <ol>
+                        @foreach($cart->attributes->kategori as $a => $kat)
+                        <li>{{$kat.' ('.$cart->attributes->item[$a].') sejumlah '.$cart->attributes->jumlah[$a].' dengan harga satuan Rp. '.number_format($cart->attributes->nominal[$a])}}</li>
+                        @endforeach
+                      </ol>
+                    </td>
+                    <td class="text-end">{{number_format($cart->price)}}</td>
+                    @else
+                    <td>-</td>
+                    <td>{{$cart->name}} sejumlah {{$cart->quantity}} dengan harga satuan Rp. {{number_format($cart->price)}}</td>
+                    <td class="text-end">{{number_format($cart->attributes->total_nominal)}}</td>
+                    @endif
+                  </tr>
+                  @endforeach
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="fw-bold">Total Dana yang akan dicairkan</td>
+                    <td class="fw-bold text-end">{{number_format(Cart::session('approval')->getTotal())}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="bank_tujuan" class="form-label">Bank Rekening Pencairan</label>
+                  <input type="text" class="form-control" value="{{$penarikan->bank_tujuan_pencairan}}" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="rekening_tujuan" class="form-label">Nomor Rekening Pencairan</label>
+                  <input type="text" class="form-control" value="{{$penarikan->rekening_tujuan_pencairan}}" readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="keterangan" class="form-label">Keterangan Tambahan dari Kecamatan / Kelurahan <span class="fst-italic text-danger">(Opsional)</span></label>
+                  <textarea rows="3" class="form-control mb-2" readonly>{{$penarikan->keterangan}}</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bukti_pencairan" class="form-label">Bukti Pencairan dari BSP</label>
+              <input type="file" name="bukti_pencairan" id="bukti_pencairan" class="form-control" accept="image/*">
+            </div>
+            <div class="col-md-6 d-grid">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+            <div class="col-md-6 d-grid">
+              <a href="{{route('penarikan.index')}}" class="btn btn-light border">Kembali</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="modalTambahPenerima" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Penerima</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="contentModalPenerima">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+@endsection
+
+@section('js_plugins')
+<script src="{{asset('assets/plugins/select2-4.0.13/dist/js/select2.min.js')}}"></script>
+<script src="{{asset('assets/plugins/jquery.mask.min.js')}}"></script>
+<script src="{{asset('assets/plugins/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/form_penerima.js')}}"></script>
+<script src="{{asset('assets/js/cmb.js')}}"></script>
+<script src="{{asset('assets/js/modal.js')}}"></script>
+@endsection
+
+@section('scripts')
+<script>
+  $(function() {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+  });
+
+  get_cart_penarikan();
+</script>
+@endsection

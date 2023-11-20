@@ -18,4 +18,12 @@ class Bantuan extends Model
     public function donatur(){
         return $this->belongsTo(Donatur::class);
     }
+
+    public function kelurahan(){
+        return $this->belongsTo(Region::class, 'tagged_by', 'id');
+    }
+
+    public function program(){
+        return $this->belongsTo(Program::class);
+    }
 }

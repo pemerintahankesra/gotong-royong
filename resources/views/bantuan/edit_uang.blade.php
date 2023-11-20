@@ -1,16 +1,14 @@
 @extends('template')
 
-@section('title', 'Tambah Bantuan Uang')
-
 @section('content')
 <div class="pagetitle">
-  <h1>Tambah Bantuan berupa Uang</h1>
+  <h1>Edit Bantuan berupa Uang</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
       <li class="breadcrumb-item">Pages</li>
       <li class="breadcrumb-item"><a href="{{route('bantuan.index')}}">Bantuan</a></li>
-      <li class="breadcrumb-item active">Tambah Bantuan Uang</li>
+      <li class="breadcrumb-item active">Edit Bantuan Uang</li>
     </ol>
   </nav>
 </div>
@@ -102,7 +100,7 @@
                 </div>
                 <div class="col-md-4">
                   <label for="bukti" class="form-label">Bukti Transfer ke Rekening BSP</label>
-                  <input type="file" name="bukti" id="bukti" class="form-control @error('bukti')is-invalid @enderror" accept="application/pdf, image/jpg, image/png">
+                  <input type="file" name="bukti" id="bukti" class="form-control @error('bukti')is-invalid @enderror" accept="image/*">
                   <small class="text-danger fst-italic">Maksimal ukuran file 2MB</small>
                   @if($bantuan->bukti)
                   <a href="/storage/{{$bantuan->bukti}}">File yang diupload</a>
@@ -110,10 +108,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
               <label for="keterangan" class="form-label">Keterangan Tambahan <span class="fst-italic text-danger">(Opsional)</span></label>
               <textarea name="keterangan" id="keterangan" rows="3" class="form-control @error('keterangan')is-invalid @enderror">{{$bantuan->keterangan}}</textarea>
             </div>
+            @if($bantuan->approval_bsp != 0)
+              <div class="col-md-6">
+                <label for="keterangan_bsp" class="form-label">Keterangan dari BSP</label>
+                <textarea name="keterangan_bsp" id="keterangan_bsp" rows="3" class="form-control" readonly>{{$bantuan->keterangan_bsp}}</textarea>
+              </div>
+            @endif
             <div class="col-md-6 d-grid">
               <button type="submit" class="btn btn-primary">Simpan</button>
             </div>

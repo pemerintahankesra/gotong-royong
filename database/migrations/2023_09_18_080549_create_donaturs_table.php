@@ -16,6 +16,8 @@ return new class extends Migration
             $table->text('alamat');
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
+            
+            $table->index('id');
         });
     }
 

@@ -11,11 +11,6 @@
             <i class="bi bi-menu-button-wide"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="master-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            {{-- <li>
-              <a href="#">
-                <i class="bi bi-circle"></i><span>Barang</span>
-              </a>
-            </li> --}}
             <li>
               <a href="{{route('donatur.index')}}">
                 <i class="bi bi-circle"></i><span>Donatur</span>
@@ -24,10 +19,23 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="{{route('bantuan.index')}}">
-            <i class="ri-hand-heart-line"></i>
-            <span>Input Bantuan</span>
+          <a class="nav-link collapsed" data-bs-target="#bantuan-nav" data-bs-toggle="collapse" href="#">
+            <i class="ri-hand-heart-line"></i><span>Bantuan Masuk</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
+          <ul id="bantuan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="{{route('bantuan.index')}}">
+                <i class="bi bi-circle"></i><span>Input Bantuan</span>
+              </a>
+            </li>
+            {{-- @if(Auth::user()->role == 'BSP') --}}
+            <li>
+              <a href="{{route('bantuan.verifikasi.index')}}">
+                <i class="bi bi-circle"></i><span>Verifikasi Bantuan Uang Masuk</span>
+              </a>
+            </li>
+            {{-- @endif --}}
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#penarikan-nav" data-bs-toggle="collapse" href="#">
@@ -40,7 +48,7 @@
               </a>
             </li>
             <li>
-              <a href="{{route('penarikan.pelaporan')}}">
+              <a href="{{route('penarikan.pelaporan.index')}}">
                 <i class="bi bi-circle"></i><span>Pelaporan Distribusi Bantuan Uang</span>
               </a>
             </li>

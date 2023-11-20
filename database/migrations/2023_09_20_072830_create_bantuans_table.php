@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
+
+            $table->index('id');
         });
     }
 

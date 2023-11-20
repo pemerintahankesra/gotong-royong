@@ -1,7 +1,5 @@
 @extends('template')
 
-@section('title', 'Ubah Password')
-
 @section('content')
 <div class="container mt-3">
   <div class="row justify-content-center">

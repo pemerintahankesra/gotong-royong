@@ -44,6 +44,11 @@ Route::middleware('auth')->group(function(){
   Route::controller(App\Http\Controllers\BantuanController::class)->prefix('bantuan')->name('bantuan.')->group(function(){
     Route::get('/data', 'data')->name('data');
     Route::get('/{kategori}', 'create')->name('create');
+    // Verifikasi Bantuan Uang
+    Route::get('/verifikasi/uang', [App\Http\Controllers\VerifikasiBantuanController::class, 'index'])->name('verifikasi.index');
+    Route::get('/verifikasi/data', [App\Http\Controllers\VerifikasiBantuanController::class, 'data'])->name('verifikasi.data');
+    Route::get('/verifikasi/uang/{id}', [App\Http\Controllers\VerifikasiBantuanController::class, 'edit'])->name('verifikasi.edit');
+    Route::put('/verifikasi/uang/{id}', [App\Http\Controllers\VerifikasiBantuanController::class, 'update'])->name('verifikasi.update');
   });
   Route::resource('/bantuan', App\Http\Controllers\BantuanController::class)->except('create');
   // Distribusi
@@ -60,19 +65,29 @@ Route::middleware('auth')->group(function(){
   });
   Route::resource('/distribusi', App\Http\Controllers\DistribusiController::class)->except('create');
   // Penarikan
-  Route::resource('/penarikan', App\Http\Controllers\PenarikanController::class)->except('show');
   Route::controller(App\Http\Controllers\PenarikanController::class)->prefix('penarikan')->name('penarikan.')->group(function(){
     Route::get('/data', 'data')->name('data');
-    Route::get('/pelaporan', 'pelaporan')->name('pelaporan');
     Route::prefix('rencana-realisasi')->name('rencana-realisasi.')->group(function(){
       Route::get('/', 'rencana_realisasi')->name('index');
       Route::get('/{kategori}/create', 'create_rencana_realisasi')->name('create');
       Route::post('/{kategori}', 'store_rencana_realisasi')->name('store');
       Route::get('/{kategori}/{id}/edit', 'edit_rencana_realisasi')->name('edit');
-      Route::put('/{id}', 'update_rencana_realisasi')->name('update');
+      Route::put('/{kategori}/{id}', 'update_rencana_realisasi')->name('update');
       Route::delete('/{id}', 'destroy_rencana_realisasi')->name('destroy');
     });
+    // Aproval Penarikan
+    Route::controller(App\Http\Controllers\VerifikasiPenarikanController::class)->prefix('verifikasi')->name('verifikasi.')->group(function(){
+      Route::get('/{id}', 'create')->name('create');
+      Route::put('/{id}', 'store')->name('store');
+      Route::get('/{id}/upload_bukti_tf', 'upload_bukti_tf')->name('upload_bukti_tf');
+      Route::put('/{id}/update', 'update')->name('update');
+    });
+    // Pelaporan Penarikan
+    Route::get('/pelaporan/data', [App\Http\Controllers\PelaporanPenarikanController::class, 'data'])->name('pelaporan.data');
+    Route::get('/pelaporan/{id}/laporan', [App\Http\Controllers\PelaporanPenarikanController::class, 'laporan'])->name('pelaporan.laporan');
+    Route::resource('/pelaporan', App\Http\Controllers\PelaporanPenarikanController::class);
   });
+  Route::resource('/penarikan', App\Http\Controllers\PenarikanController::class)->except('show');
 });
 
 Route::controller(App\Http\Controllers\DataController::class)->prefix('data')->name('data.')->group(function(){

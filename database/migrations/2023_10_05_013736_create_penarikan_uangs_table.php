@@ -15,11 +15,18 @@ return new class extends Migration
             $table->foreignId('tagged_by')->constrained(table : 'users')->onUpdate('cascade');
             $table->date('tanggal_pengajuan');
             $table->text('surat_pengajuan');
+            $table->text('bank_tujuan_pencairan');
             $table->text('rekening_tujuan_pencairan');
             $table->date('tanggal_pencairan')->nullable();
+            $table->text('keterangan')->nullable();
             $table->integer('approval_bsp')->default(0);
+            $table->text('keterangan_bsp')->nullable();
+            $table->text('bukti_pencairan')->nullable();
+            $table->integer('status_laporan')->default(0);
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
+
+            $table->index('id');
         });
     }
 

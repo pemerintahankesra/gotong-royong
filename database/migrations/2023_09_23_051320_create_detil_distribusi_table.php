@@ -12,13 +12,17 @@ return new class extends Migration
         Schema::create('detil_distribusi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('distribusi_id')->constrained(table : 'distribusi')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('penerima_id')->constrained(table : 'penerima');
+            $table->foreignId('penerima_id')->nullable()->constrained(table: 'penerima');
             $table->string('kategori');
             $table->string('item');
             $table->integer('jumlah');
             $table->integer('nominal');
             $table->integer('total_nominal');
+            $table->text('foto_laporan')->nullable();
             $table->timestamps();
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
+
+            $table->index('id');
         });
     }
 

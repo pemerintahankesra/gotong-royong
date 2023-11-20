@@ -12,10 +12,10 @@ class DetilPenarikan extends Model
     protected $table = 'detil_penarikan';
 
     public function penarikan(){
-        return $this->belongsTo('penarikan_id', 'id');
+        return $this->belongsTo(Penarikan::class, 'penarikan_id', 'id');
     }
 
     public function penerima(){
-        return $this->belongsTo('penerima_id', 'id');
+        return $this->belongsTo(Penerima::class, 'penerima_id', 'id');
     }
 }

@@ -6,12 +6,12 @@
 
 @section('content')
 <div class="pagetitle">
-  <h1>Data Pengajuan Penarikan Uang ke BSP</h1>
+  <h1>Data Pelaporan Penarikan Uang ke BSP</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{route('dashboards.index')}}">Home</a></li>
       <li class="breadcrumb-item">Pages</li>
-      <li class="breadcrumb-item active">Pengajuan Penarikan Uang ke BSP</li>
+      <li class="breadcrumb-item active">Pelaporan Penarikan Uang ke BSP</li>
     </ol>
   </nav>
 </div>
@@ -20,9 +20,6 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body pt-3">
-          <div class="row">
-            <div class="col d-grid mb-3"><a href="/penarikan/create" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Buat Pengajuan Penarikan Uang ke BSP</a></div>
-          </div>
           <table class="table table-stripped table-hover" id="datatable">
             <thead>
               <tr>
@@ -32,7 +29,7 @@
                 <th class="text-center">Tanggal Pengajuan</th>
                 <th class="text-center">Peruntukan</th>
                 <th class="text-center">Jumlah Uang (Rp)</th>
-                <th class="text-center">Approval BSP</th>
+                <th class="text-center">Status Laporan</th>
                 <th class="text-center">Aksi</th>
               </tr>
             </thead>
@@ -68,7 +65,7 @@
 
       $('#datatable').DataTable({
         "ajax" : {
-          "url" : "{{route('penarikan.data')}}",
+          "url" : "{{route('penarikan.pelaporan.data')}}",
           "type" : "GET",
           "dataType" : "JSON",
           "data" : function(d){
@@ -87,39 +84,20 @@
           {
             className: 'text-center', render : function(data, type, row){
               var span, status, html;
-              if(row.approval_bsp == 0){
+              if(row.status_laporan == 0){
                 span = 'bg-secondary';
-                status = 'Sedang Verifikasi';
-              } else if(row.approval_bsp == 11){
+                status = 'Belum dilaporkan';
+              } else if(row.status_laporan == 1){
                 span = 'bg-success';
-                status = 'Proses Pencairan';
-              } else if(row.approval_bsp == 12){
-                span = 'bg-success';
-                status = 'Telah Dicairkan';
-              } else if(row.approval_bsp == 21){
-                span = 'bg-warning';
-                status = 'Dikembalikan / Perlu Perbaikan';
-              } else if(row.approval_bsp == 20){
-                span = 'bg-secondary';
-                status = 'Sedang Verifikasi<br>(Telah dilakukan perbaikan)';
-              } else if(row.approval_bsp == 41){
-                span = 'bg-danger';
-                status = 'Ditolak';
+                status = 'Sudah dilaporkan';
               }
               html = '<span class="badge '+span+'">'+status+'</span>';
               return html;
             }},
           {className : 'justify-content-center d-flex', render : function(data, type, row){
             var html = '<button class="btn btn-sm btn-light mx-1" onclick="modal_detil_pengajuan('+row.id+')">Rincian</button>';
-            if(row.approval_bsp == 0 || row.approval_bsp == 20){
-              html += '<a href="/penarikan/verifikasi/'+row.id+'" class="btn btn-success btn-sm mx-1">Verifikasi</a>';
-            }
-            if(row.approval_bsp == 11){
-              html += '<a href="/penarikan/verifikasi/'+row.id+'/upload_bukti_tf" class="btn btn-success btn-sm mx-1">Upload Bukti TF BSP</a>';
-            }
-            if(row.approval_bsp == 0 || row.approval_bsp == 20){
-              html += '<a href="/penarikan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-              html += '<form method="post" action="/penarikan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+            if(row.status_laporan == 0){
+              html += '<a href="/penarikan/pelaporan/'+row.id+'/edit" class="btn btn-success btn-sm mx-1">Buat Laporan</a>';
             }
             return html;
           }}

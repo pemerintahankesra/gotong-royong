@@ -1,4 +1,4 @@
-<form data-action="/distribusi/penerima/{{$id}}" method="post" id="formAddPenerima">
+<form data-action="/penarikan/rencana-realisasi/{{$kategori}}/{{$id}}" method="post" id="formAddRealisasi">
   @csrf
   @method('PUT')
   <div class="col-md-12">
@@ -93,8 +93,8 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($cart->attributes->kategori as $index=>$kategori)
-        <tr id="row{{$index}}">
+        @foreach($cart->attributes->kategori as $i=>$kategori)
+        <tr id="row{{$i}}">
           <td><select name="kategori[]" class="form-select kategori-bantuan">
             <option></option>
             <option value="Susu Balita Stunting" {{$kategori == 'Susu Balita Stunting' ? 'selected' : ''}}>Susu Balita Stunting</option>
@@ -102,10 +102,10 @@
             <option value="Permakanan / Kudapan Protein Hewani" {{$kategori == 'Permakanan / Kudapan Protein Hewani' ? 'selected' : ''}}>Permakanan / Kudapan</option>
             <option value="Lain-lain" {{$kategori == 'Lain-lain' ? 'selected' : ''}}>Lain-lain</option>
           </select></td>
-          <td><input type="text" name="item[]" class="form-control keterangan-bantuan" value="{{$cart->attributes->item[$index]}}"></td>
-          <td><input type="text" name="jumlah[]" class="form-control jumlah-bantuan" min="1" value="{{$cart->attributes->jumlah[$index]}}"></td>
-          <td><input type="text" name="nominal[]" class="form-control nominal-bantuan" value="{{$cart->attributes->nominal[$index]}}"></td>
-          <td class="align-middle text-end"><span class="total-bantuan">{{$cart->attributes->total_nominal[$index]}}</span><input type="hidden" name="total_nominal[]" class="text-total-bantuan" value="{{$cart->attributes->total_nominal[$index]}}"></td>
+          <td><input type="text" name="item[]" class="form-control keterangan-bantuan" value="{{$cart->attributes->item[$i]}}"></td>
+          <td><input type="text" name="jumlah[]" class="form-control jumlah-bantuan" min="1" value="{{$cart->attributes->jumlah[$i]}}"></td>
+          <td><input type="text" name="nominal[]" class="form-control nominal-bantuan" value="{{number_format($cart->attributes->nominal[$i])}}"></td>
+          <td class="align-middle text-end"><span class="total-bantuan">{{number_format($cart->attributes->total_nominal[$i])}}</span><input type="hidden" name="total_nominal[]" class="text-total-bantuan" value="{{$cart->attributes->total_nominal[$i]}}"></td>
           <td class="align-middle"><button class="btn btn-danger btn-sm" onclick="deleteRow(this);">X</button></td>
         </tr>
         @endforeach

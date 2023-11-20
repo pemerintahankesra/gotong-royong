@@ -1,7 +1,5 @@
 @extends('template')
 
-@section('title', 'Distribusi Bantuan Baru')
-
 @section('css_plugins')
     <link rel="stylesheet" href="{{asset('assets/plugins/select2-4.0.13/dist/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap-5-theme-1.3.0/dist/select2-bootstrap-5-theme.min.css')}}">
@@ -25,21 +23,26 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body pt-2">
-          <form action="{{route('penarikan.store')}}" class="row g-2" method="POST" id="formDistribusi">
+          <form action="{{route('penarikan.store')}}" class="row g-2" method="POST" id="formDistribusi" enctype="multipart/form-data">
             @csrf
             <div class="col-md-12">
               <input type="hidden" id="user_id" value="{{Auth::user()->id}}">
               <div class="row">
                 <div class="col-md-2">
                   <label for="tanggal" class="form-label">Tanggal Pengajuan</label>
-                  <input type="date" name="tanggal" id="tanggal" class="form-control" max="{{date('Y-m-d')}}">
+                  <input type="date" name="tanggal" id="tanggal" class="form-control @error('tanggal')is-invalid @enderror" max="{{date('Y-m-d')}}" value="{{old('tanggal') ? date('Y-m-d', strtotime(old('tanggal'))) : ''}}">
+                  @error('tanggal')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
                 </div>
                 <div class="col-md-3">
                   <label for="kecamatan" class="form-label">Kecamatan</label>
-                  <select name="kecamatan" id="kecamatan" class="form-select @error('kecamatan')is-invalid @enderror" onchange="get_asw_id('kecamatan', this.value); get_kelurahan(this.value)">
+                  <select name="kecamatan" id="kecamatan" class="form-select mb-2 @error('kecamatan')is-invalid @enderror" onchange="get_asw_id('kecamatan', this.value); get_kelurahan(this.value)">
                     <option></option>
                     @foreach($kecamatan as $kec)
-                    <option value="{{$kec->id}}" {{old('kecamatan') ? 'selected' : ''}}>Kec. {{$kec->name}}</option>
+                    <option value="{{$kec->id}}">Kec. {{$kec->name}}</option>
                     @endforeach
                   </select>
                   <input type="hidden" name="kecamatan_id" id="kecamatan_id">
@@ -51,7 +54,7 @@
                 </div>
                 <div class="col-md-3">
                   <label for="kelurahan" class="form-label">Kelurahan</label>
-                  <select name="kelurahan" id="kelurahan" class="form-select @error('kelurahan')is-invalid @enderror" onchange="get_asw_id('kelurahan', this.value); get_donatur(this.value)">
+                  <select name="kelurahan" id="kelurahan" class="form-select mb-2 @error('kelurahan')is-invalid @enderror" onchange="get_asw_id('kelurahan', this.value); get_donatur(this.value)">
                     <option></option>
                   </select>
                   <input type="hidden" name="kelurahan_id" id="kelurahan_id">
@@ -63,13 +66,39 @@
                 </div>
                 <div class="col-md-4">
                   <label for="program" class="form-label">Program</label>
-                  <select name="program" id="program" class="form-select @error('program')is-invalid @enderror">
+                  <select name="program" id="program" class="form-select mb-2 @error('program')is-invalid @enderror">
                     <option></option>
                     @foreach($program as $prog)
-                    <option value="{{$prog->id}}">{{$prog->name}}</option>
+                    <option value="{{$prog->id}}" {{old('program') == $prog->id ? 'selected' : ''}}>{{$prog->name}}</option>
                     @endforeach
                   </select>
                   @error('program')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4 col-lg-2">
+                  <label for="bank_tujuan" class="form-label">Bank Tujuan Pencairan</label>
+                  <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control">
+                </div>
+                <div class="col-md-4 col-lg-2">
+                  <label for="rekening_tujuan" class="form-label">Rekening Tujuan Pencairan</label>
+                  <input type="text" name="rekening_tujuan" id="rekening_tujuan" class="form-control mb-2 @error('rekening_tujuan')is-invalid @enderror" value="{{old('rekening_tujuan')}}">
+                  @error('rekening_tujuan')
+                  <div class="invalid-feedback">
+                    {{$message}}
+                  </div>
+                  @enderror
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <label for="surat_pengajuan" class="form-label">Surat Pengajuan Penarikan Dana</label>
+                  <input type="file" name="surat_pengajuan" id="surat_pengajuan" class="form-control mb-2 @error('surat_pengajuan')is-invalid @enderror" accept="application/pdf">
+                  @error('surat_pengajuan')
                   <div class="invalid-feedback">
                     {{$message}}
                   </div>
@@ -106,16 +135,24 @@
                   </tr>
                 </tfoot>
               </table>
+              @error('cart')
+              <div class="invalid-feedback d-block">{{$message}}</div>
+              @enderror
             </div>
             <div class="col-md-12">
               <label for="keterangan" class="form-label">Keterangan Tambahan <span class="fst-italic text-danger">(Opsional)</span></label>
-              <textarea name="keterangan" id="keterangan" rows="3" class="form-control @error('keterangan')is-invalid @enderror"></textarea>
+              <textarea name="keterangan" id="keterangan" rows="3" class="form-control mb-2 @error('keterangan')is-invalid @enderror">{{old('keterangan')}}</textarea>
+              @error('keterangan')
+              <div class="invalid-feedback">
+                {{$message}}
+              </div>
+              @enderror
             </div>
             <div class="col-md-6 d-grid">
               <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
             <div class="col-md-6 d-grid">
-              <a href="{{route('distribusi.index')}}" class="btn btn-light border">Kembali</a>
+              <a href="{{route('penarikan.index')}}" class="btn btn-light border">Kembali</a>
             </div>
           </form>
         </div>
@@ -161,11 +198,11 @@
 
   get_cart_penarikan();
   
-  function btnEditRencanaRealisasi(id){
+  function btnEditRencanaRealisasi(id, kategori){
     event.preventDefault();
 
     $('#modalTambahPenerima').modal('toggle');
-    $('#contentModalPenerima').load('/penarikan/penerima/'+id+'/edit');
+    $('#contentModalPenerima').load('/penarikan/rencana-realisasi/'+kategori+'/'+id+'/edit');
   }
 
   function deleteRencanaRealisasi(form_id){

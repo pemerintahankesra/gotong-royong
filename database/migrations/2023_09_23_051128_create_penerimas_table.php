@@ -14,14 +14,16 @@ return new class extends Migration
             $table->foreignId('region_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('nik');
             $table->string('namalengkap');
-            $table->string('alamatdomisili');
-            $table->text('kecamatandomisili');
-            $table->text('kelurahandomisili');
-            $table->string('alamatktp');
-            $table->text('kecamatanktp');
-            $table->text('kelurahanktp');
+            $table->string('alamatdomisili')->nullable();
+            $table->text('kecamatandomisili')->nullable();
+            $table->text('kelurahandomisili')->nullable();
+            $table->string('alamatktp')->nullable();
+            $table->text('kecamatanktp')->nullable();
+            $table->text('kelurahanktp')->nullable();
             $table->string('flag_surabaya', 1);
             $table->timestamps();
+
+            $table->index('id');
         });
     }
 

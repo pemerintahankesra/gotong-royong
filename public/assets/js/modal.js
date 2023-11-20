@@ -67,3 +67,15 @@ function modal_realisasi(kategori){
     $('#contentModalPenerima').load('/penarikan/rencana-realisasi/barang/create');
   }
 }
+
+// Modal Rincian Pengajuan
+function modal_detil_pengajuan(id){
+  $('#modalDetilPengajuan').modal('toggle');
+  $('#contentModalDetilPengajuan').load('/penarikan/'+id);
+}
+
+// Modal Upload Laporan
+function modal_upload_laporan(id){
+  $('#modalUploadLaporan').modal('toggle');
+  $('#contentModalUploadLaporan').load('/penarikan/pelaporan/'+id+'/laporan');
+}

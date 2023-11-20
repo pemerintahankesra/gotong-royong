@@ -1,7 +1,5 @@
 @extends('template')
 
-@section('title', 'Data Donatur')
-
 @section('css_plugins')
     <link href="{{asset('assets/plugins/DataTables-1.13.6/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
 @endsection

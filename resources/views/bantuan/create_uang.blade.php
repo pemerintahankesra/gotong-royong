@@ -1,7 +1,5 @@
 @extends('template')
 
-@section('title', 'Tambah Bantuan Uang')
-
 @section('content')
 <div class="pagetitle">
   <h1>Tambah Bantuan Berupa Uang</h1>
@@ -103,7 +101,7 @@
                 </div>
                 <div class="col-md-6 col-lg-3">
                   <label for="bukti" class="form-label">Bukti Transfer ke Rekening BSP</label>
-                  <input type="file" name="bukti" id="bukti" class="form-control @error('bukti')is-invalid @enderror" accept="application/pdf, image/jpg, image/png">
+                  <input type="file" name="bukti" id="bukti" class="form-control @error('bukti')is-invalid @enderror" accept="image/*">
                   <small class="text-danger fst-italic">Maksimal ukuran file 2MB</small>
                 </div>
               </div>
