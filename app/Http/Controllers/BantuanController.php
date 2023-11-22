@@ -8,7 +8,7 @@ use App\Models\DetilBantuan;
 use App\Models\Region;
 use App\Models\Program;
 use App\Models\Donatur;
-use App\Requests\Bantuan\StoreRequest;
+use App\Http\Requests\Bantuan\StoreRequest;
 use Auth, DB, DataTables, Storage;
 
 class BantuanController extends Controller
