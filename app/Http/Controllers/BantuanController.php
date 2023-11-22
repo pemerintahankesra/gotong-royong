@@ -24,6 +24,7 @@ class BantuanController extends Controller
         ->join('program as p', 'p.id', '=', 'bantuan.program_id')
         ->join('regions as kel', 'kel.id', '=', 'bantuan.tagged_by')
         ->join('regions as kec', 'kec.id', '=', 'kel.sub_id')
+        ->orderBy('bantuan.tanggal', 'desc')
         ->with('detil_bantuan');
         if($user->role == 'Kecamatan'){
         $bantuan = $bantuan->where('kel.sub_id', $user->region_id);
