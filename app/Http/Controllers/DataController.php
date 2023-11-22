@@ -18,7 +18,7 @@ class DataController extends Controller
   }
 
   public function get_donatur(Request $request){
-    $donatur = Donatur::where('region_id', $request->kelurahan_id)->orderBy('name', 'asc')->get();
+    $donatur = Donatur::where('region_id', $request->kelurahan_id)->orderBy('nama', 'asc')->get();
     return response()->json([
       'success' => true,
       'data' => $donatur,
