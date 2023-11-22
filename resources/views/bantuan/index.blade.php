@@ -104,9 +104,9 @@
           {render : function(data, type, row){
             var html = '<div class="d-flex justify-content-center">';
               if(row.approval_bsp == 0 || row.approval_bsp == 21){
-                html += '<a href="/bantuan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
+                html += '<a href="'+base_url+'/bantuan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
                 if(row.approval_bsp == 0){
-                  html += '<form method="post" action="/bantuan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+                  html += '<form method="post" action="'+base_url+'/bantuan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
                 }
               } else {
                 html += '-';
