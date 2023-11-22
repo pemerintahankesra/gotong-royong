@@ -1,5 +1,4 @@
 let array_penerima;
-let base_url = 'https://pemerintahan.surabaya.go.id/gotong-royong';
 
 function get_kelurahan(kecamatan){
   $.ajax({

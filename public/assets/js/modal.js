@@ -1,5 +1,3 @@
-let base_url = 'https://pemerintahan.surabaya.go.id/gotong-royong';
-
 // Modal Donatur
 function modal_donatur(){
   $('#modalDonatur').modal('toggle');
