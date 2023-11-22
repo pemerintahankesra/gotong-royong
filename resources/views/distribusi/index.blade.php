@@ -69,8 +69,8 @@
           {data : 'program', className: 'text-center'},
           {render : function(data, type, row){
             var html = '<div class="d-flex justify-content-center">';
-            html += '<a href="/distribusi/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-            html += '<form method="post" action="/distribusi/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+            html += '<a href="'+base_url+'/distribusi/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
+            html += '<form method="post" action="'+base_url+'/distribusi/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
             html += '</div>';
             return html;
           }}

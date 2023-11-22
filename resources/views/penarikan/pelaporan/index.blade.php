@@ -97,7 +97,7 @@
           {className : 'justify-content-center d-flex', render : function(data, type, row){
             var html = '<button class="btn btn-sm btn-light mx-1" onclick="modal_detil_pengajuan('+row.id+')">Rincian</button>';
             if(row.status_laporan == 0){
-              html += '<a href="/penarikan/pelaporan/'+row.id+'/edit" class="btn btn-success btn-sm mx-1">Buat Laporan</a>';
+              html += '<a href="'+base_url+'/penarikan/pelaporan/'+row.id+'/edit" class="btn btn-success btn-sm mx-1">Buat Laporan</a>';
             }
             return html;
           }}
