@@ -28,13 +28,13 @@
                 <i class="bi bi-circle"></i><span>Input Bantuan</span>
               </a>
             </li>
-            {{-- @if(Auth::user()->role == 'BSP') --}}
+            @if(Auth::user()->role == 'BSP')
             <li>
               <a href="{{route('bantuan.verifikasi.index')}}">
                 <i class="bi bi-circle"></i><span>Verifikasi Bantuan Uang Masuk</span>
               </a>
             </li>
-            {{-- @endif --}}
+            @endif
           </ul>
         </li>
         <li class="nav-item">

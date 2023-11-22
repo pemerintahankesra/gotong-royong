@@ -17,8 +17,8 @@
             <div class="card">
               <div class="card-body pt-3">
                 <div class="row">
-                  <div class="col-md-6 d-grid mb-3"><a href="/bantuan/uang" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Tambah Bantuan Uang</a></div>
-                  <div class="col-md-6 d-grid mb-3"><a href="/bantuan/barang" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Tambah Bantuan Barang</a></div>
+                  <div class="col-md-6 d-grid mb-3"><a href="{{url('/bantuan/uang')}}" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Tambah Bantuan Uang</a></div>
+                  <div class="col-md-6 d-grid mb-3"><a href="{{url('/bantuan/barang')}}" class="btn btn-primary fs-5 py-4"><i class="bx bxs-package"></i> Tambah Bantuan Barang</a></div>
                 </div>
                 <table class="table table-stripped table-hover" id="datatable">
                   <thead>
