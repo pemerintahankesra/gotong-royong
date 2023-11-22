@@ -1,8 +1,9 @@
 let array_penerima;
+let base_url = 'https://pemerintahan.surabaya.go.id/gotong-royong';
 
 function get_kelurahan(kecamatan){
   $.ajax({
-    url : '/data/get-kelurahan',
+    url : base_url+'/data/get-kelurahan',
     type : 'GET',
     data : {
       kecamatan_id : kecamatan,
@@ -26,7 +27,7 @@ function get_kelurahan(kecamatan){
 
 function get_donatur(kelurahan){
   $.ajax({
-    url : '/data/get-donatur',
+    url : base_url+'/data/get-donatur',
     type : 'GET',
     data : {
       kelurahan_id : kelurahan,
@@ -48,7 +49,7 @@ function get_donatur(kelurahan){
 }
 
 function get_asw_id(wilayah, value){
-  $.get('/data/get-asw-id', {
+  $.get(base_url+'/data/get-asw-id', {
     id : value,
   }, function(response){
     response = JSON.parse(response);
@@ -67,7 +68,7 @@ function get_daftar_penerima(){
   let program = $('#program').val();
 
   if(program == '1'){
-    $.get('/data/get-balita-stunting', {
+    $.get(base_url+'/data/get-balita-stunting', {
       kecamatan : kecamatan,
       kelurahan : kelurahan,
     }, function(response){
@@ -87,7 +88,7 @@ function get_daftar_penerima(){
   } else if(program == 4){
 
   } else if(program == 5){
-    $.get('/data/get-bumil-resiko-tinggi', {
+    $.get(base_url+'/data/get-bumil-resiko-tinggi', {
       kecamatan : kecamatan,
       kelurahan : kelurahan,
     }, function(response){
@@ -129,7 +130,7 @@ function getDataByNIK(value){
 
   $('#loading-data').removeClass('d-none');
 
-  $.get('/data/get-cekin', {
+  $.get(base_url+'/data/get-cekin', {
     'nik' : value,
     'program_id' : $('#program').val(),
   }, function(response){

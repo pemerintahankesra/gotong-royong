@@ -1,3 +1,5 @@
+let base_url = 'https://pemerintahan.surabaya.go.id/gotong-royong';
+
 $('#formAddPenerima').on('submit', function(event){
   event.preventDefault();
 
@@ -172,7 +174,7 @@ function calculateGrandTotal(){
 function get_cart_distribusi(){
   let user_id = $('#user_id').val();
 
-  $.get('/distribusi/penerima', function(result){
+  $.get(base_url+'/distribusi/penerima', function(result){
     if(result.jumlah > 0){
       $('#content_detil_penerima > tr').remove();
       let html = '';
@@ -200,7 +202,7 @@ function get_cart_distribusi(){
 function get_cart_penarikan(){
   let user_id = $('#user_id').val();
 
-  $.get('/penarikan/rencana-realisasi', function(result){
+  $.get(base_url+'/penarikan/rencana-realisasi', function(result){
     if(result.jumlah > 0){
       $('#content_detil_penerima > tr').remove();
       let html = '';
