@@ -1,3 +1,5 @@
+let base_url = 'https://pemerintahan.surabaya.go.id/gotong-royong';
+
 // Modal Donatur
 function modal_donatur(){
   $('#modalDonatur').modal('toggle');
@@ -5,7 +7,7 @@ function modal_donatur(){
 
 function get_kelurahan_donatur(kecamatan){
   $.ajax({
-    url : '/data/get-kelurahan',
+    url : base_url+'/data/get-kelurahan',
     type : 'GET',
     data : {
       kecamatan_id : kecamatan,
@@ -33,7 +35,7 @@ $('#formModalTambahDonatur').submit(function(){
   var kelurahan = $('#kelurahan').val();
 
   $.ajax({
-    url : '/donatur/store',
+    url : base_url+'/donatur/store',
     type : 'POST',
     data : formData,
     success : function(response){
