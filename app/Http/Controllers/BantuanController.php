@@ -8,6 +8,7 @@ use App\Models\DetilBantuan;
 use App\Models\Region;
 use App\Models\Program;
 use App\Models\Donatur;
+use App\Requests\Bantuan\StoreRequest;
 use Auth, DB, DataTables, Storage;
 
 class BantuanController extends Controller
@@ -64,7 +65,7 @@ class BantuanController extends Controller
         return abort(404);
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         if($request->jenis == 'Uang Tunai' || $request->jenis == 'Barang'){
             $bantuan = new Bantuan;
