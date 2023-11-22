@@ -67,8 +67,8 @@
           {data : 'donatur'},
           {data : 'alamat'},
           {className : 'justify-content-center d-flex', render : function(data, type, row){
-            var html = '<a href="/donatur/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-            html += '<form method="post" action="/donatur/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+            var html = '<a href="'+base_url+'/donatur/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
+            html += '<form method="post" action="'+base_url+'/donatur/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
             return html;
           }}
         ]
