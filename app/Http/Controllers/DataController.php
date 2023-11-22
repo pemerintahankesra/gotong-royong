@@ -11,14 +11,14 @@ use App\Models\GR\Stunting;
 class DataController extends Controller
 {
   public function get_kelurahan(Request $request){
-    $kelurahan = Region::where('sub_id', $request->kecamatan_id)->get();
+    $kelurahan = Region::where('sub_id', $request->kecamatan_id)->orderBy('name', 'asc')->get();
     return json_encode([
       'data' => $kelurahan,
     ], 200);
   }
 
   public function get_donatur(Request $request){
-    $donatur = Donatur::where('region_id', $request->kelurahan_id)->get();
+    $donatur = Donatur::where('region_id', $request->kelurahan_id)->orderBy('name', 'asc')->get();
     return response()->json([
       'success' => true,
       'data' => $donatur,
