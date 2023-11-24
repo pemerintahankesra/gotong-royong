@@ -5,7 +5,7 @@ function modal_donatur(){
 
 function get_kelurahan_donatur(kecamatan){
   $.ajax({
-    url : window.location.origin+'/gotong-royong/data/get-kelurahan',
+    url : base_url+'/data/get-kelurahan',
     type : 'GET',
     data : {
       kecamatan_id : kecamatan,
@@ -33,7 +33,7 @@ $('#formModalTambahDonatur').submit(function(){
   var kelurahan = $('#kelurahan').val();
 
   $.ajax({
-    url : window.location.origin+'/gotong-royong/donatur/store',
+    url : base_url+'/donatur/store',
     type : 'POST',
     data : formData,
     success : function(response){
@@ -61,21 +61,21 @@ function modal_realisasi(kategori){
   }
   $('#modalTambahPenerima').modal('toggle');
   if(kategori == 'penerima'){
-    $('#contentModalPenerima').load(window.location.origin+'/gotong-royong/penarikan/rencana-realisasi/penerima/create');
+    $('#contentModalPenerima').load(base_url+'/penarikan/rencana-realisasi/penerima/create');
     get_daftar_penerima();
   } else if(kategori == 'barang') {
-    $('#contentModalPenerima').load(window.location.origin+'/gotong-royong/penarikan/rencana-realisasi/barang/create');
+    $('#contentModalPenerima').load(base_url+'/penarikan/rencana-realisasi/barang/create');
   }
 }
 
 // Modal Rincian Pengajuan
 function modal_detil_pengajuan(id){
   $('#modalDetilPengajuan').modal('toggle');
-  $('#contentModalDetilPengajuan').load(window.location.origin+'/gotong-royong/penarikan/'+id);
+  $('#contentModalDetilPengajuan').load(base_url+'/penarikan/'+id);
 }
 
 // Modal Upload Laporan
 function modal_upload_laporan(id){
   $('#modalUploadLaporan').modal('toggle');
-  $('#contentModalUploadLaporan').load(window.location.origin+'/gotong-royong/penarikan/pelaporan/'+id+'/laporan');
+  $('#contentModalUploadLaporan').load(base_url+'/penarikan/pelaporan/'+id+'/laporan');
 }

@@ -21,7 +21,7 @@
       <div class="card">
         <div class="card-body pt-3">
           <div class="row">
-            <div class="col d-grid mb-3"><a href="'+base_url+'/penarikan/create" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Buat Pengajuan Penarikan Uang ke BSP</a></div>
+            <div class="col d-grid mb-3"><a href="{{url('/penarikan/create')}}" class="btn btn-primary fs-5 py-4"><i class="bx bx-money"></i> Buat Pengajuan Penarikan Uang ke BSP</a></div>
           </div>
           <table class="table table-stripped table-hover" id="datatable">
             <thead>

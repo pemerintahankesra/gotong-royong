@@ -4,5 +4,6 @@
     <script src="{{asset('assets/plugins/DataTables-1.13.6/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/plugins/DataTables-1.13.6/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('assets/plugins/sweetalert/sweetalert2.all.min.js')}}"></script>
+    <script>var base_url = "{{url('')}}"</script>
     @yield('js_plugins')
     <script src="{{asset('assets/js/main.js')}}"></script>
