@@ -141,11 +141,6 @@
               <option value="{{$kec->id}}" {{old('kecamatan') ? 'selected' : ''}}>Kec. {{$kec->name}}</option>
               @endforeach
             </select>
-            @error('kecamatan')
-            <div class="invalid-feedback">
-              {{$message}}
-            </div>
-            @enderror
           </div>
           <div class="col-md-6">
             <label for="kelurahan" class="form-label">Kelurahan</label>
@@ -157,29 +152,14 @@
                 @endforeach
               @endif
             </select>
-            @error('kelurahan')
-            <div class="invalid-feedback">
-              {{$message}}
-            </div>
-            @enderror
           </div>
           <div class="col-md-12">
             <label for="donatur" class="form-label">Donatur</label>
             <input type="text" name="donatur" id="donatur" class="form-control mb-2 @error('donatur') is-invalid @enderror" placeholder="Nama Pribadi, Kelompok atau Perusahaan" value="{{old('donatur')}}">
-            @error('donatur')
-            <div class="invalid-feedback">
-              {{$message}}
-            </div>
-            @enderror
           </div>
           <div class="col-md-12">
             <label for="alamat" class="form-label">Alamat</label>
             <textarea name="alamat" id="alamat" rows="3" class="form-control mb-2 @error('alamat') is-invalid @enderror">{{old('alamat')}}</textarea>
-            @error('alamat')
-            <div class="invalid-feedback">
-              {{$message}}
-            </div>
-            @enderror
           </div>
           <div class="col-md-6 d-grid">
             <button type="submit" class="btn btn-primary">Simpan</button>

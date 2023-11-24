@@ -7,9 +7,6 @@
     <title>Aplikasi Gotong Royong | Bagian Pemerintahan dan Kesejahteraan Rakyat</title>
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    <script>
-      let base_url = 'https://pemerintahan.surabaya.go.id/gotong-royong';
-    </script>
     @include('_partials.css')
     @yield('styles')
   </head>

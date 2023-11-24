@@ -97,7 +97,7 @@
           {render : function(data, type, row){
             var html = '<div class="d-flex justify-content-center">';
             if(row.approval_bsp == 0 || row.approval_bsp == 20){
-              html += '<a href="/bantuan/verifikasi/uang/'+row.id+'" class="btn btn-success btn-sm mx-1">Verifikasi</a>';
+              html += '<a href="'+window.location.origin+'/gotong-royong/bantuan/verifikasi/uang/'+row.id+'" class="btn btn-success btn-sm mx-1">Verifikasi</a>';
             } else {
               html += '-'
             }
