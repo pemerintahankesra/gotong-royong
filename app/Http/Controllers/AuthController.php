@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Auth;
 
 class AuthController extends Controller
@@ -18,6 +19,12 @@ class AuthController extends Controller
       'password' => 'required'
     ]);
 
+    if (is_null($request->input('g-recaptcha-response'))) {
+      return redirect()->back()->withErrors(['captcha' => 'Tolong lengkapi captcha yang ada']);
+    } else {
+      $this->authenticate($request);
+    }
+
     $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
     if(Auth::attempt([$fieldType => $credentials['username'], 'password' => $credentials['password']])){
@@ -25,6 +32,23 @@ class AuthController extends Controller
     }
 
     return back()->withErrors(['username' => 'Mohon cek kembali username atau password anda!'])->withInput();
+  }
+
+  function authenticate(Request $request)
+  {
+      $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+          'secret'   => env('RECAPTCHA_SITE_SECRET'),
+          'response' => $request->input('g-recaptcha-response'),
+          'remoteip' => $request->ip(),
+      ]);
+
+      $captchaResponse = $response->json();
+
+      if ($captchaResponse['success']) {
+        return true;
+      } else {
+          return redirect()->back()->withErrors(['captcha' => 'Captcha verification gagal.']);
+      }
   }
   
   public function reset_password(){

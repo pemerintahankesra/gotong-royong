@@ -30,7 +30,7 @@ class BantuanController extends Controller
         if($user->role == 'Kecamatan'){
         $bantuan = $bantuan->where('kel.sub_id', $user->region_id);
         } else if($user->role == 'Kelurahan'){
-        $bantuan = $bantuan->where('u.id', $user->id);
+        $bantuan = $bantuan->where('kel.id', $user->id);
         }
         $bantuan = $bantuan->get();
 

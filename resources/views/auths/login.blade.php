@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}">
     <!-- Login Style -->
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
   <div class="container-fluid">
@@ -24,7 +25,7 @@
                 <form action="{{ route('auth.login_action') }}" method="POST">
                   @csrf
                   @if($errors->any())
-                  <div class="text-danger mb-3"><small>Mohon cek kembali username atau password anda</small></div>
+                  <div class="text-danger mb-3"><small>Mohon cek kembali inputan anda</small></div>
                   @endif
                   @if(\Session::has('success'))
                   <div class="text-success mb-3"><small>{!!\Session::get('success')!!}</small></div>
@@ -35,6 +36,7 @@
                   <div class="form-group mb-3">
                     <input type="password" name="password" id="password" class="form-control border-0 shadow-sm px-4 rounded-pill" placeholder="Password" required>
                   </div>
+                  <div class="g-recaptcha mb-3" data-sitekey={{config('services.recaptcha.key')}}></div>
                   <div class="d-grid gap-2">
                     <button class="btn btn-primary rounded-pill btn-block shadow-sm">Log In</button>
                     <small class="text-center text-muted">Reset Password? <a href="{{route('auth.reset_password')}}" class="text-small">Klik disini</a></small>
