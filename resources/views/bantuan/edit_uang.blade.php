@@ -103,7 +103,7 @@
                   <input type="file" name="bukti" id="bukti" class="form-control @error('bukti')is-invalid @enderror" accept="image/*">
                   <small class="text-danger fst-italic">Maksimal ukuran file 2MB</small>
                   @if($bantuan->bukti)
-                  <a href="/storage/{{$bantuan->bukti}}">File yang diupload</a>
+                  <a href="{{asset('/storage/'.$bantuan->bukti)}}">File yang diupload</a>
                   @endif
                 </div>
               </div>

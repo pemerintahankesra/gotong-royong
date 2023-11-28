@@ -32,8 +32,8 @@ return [
     ],
 
     'recaptcha' => [
-        'key' => '6LcTrRYpAAAAAGAVbjFe5yWZFtYPAkLmg-_cm68G',
-        'secret' => '6LcTrRYpAAAAAF7PqvAGoTXFaYC_66xxtsJG_pPo',
+        'key' => env('GCAPTCHA_KEY'),
+        'secret' => env('GCAPTCHA_SECRET'),
     ],
 
 ];
