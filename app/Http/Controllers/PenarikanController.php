@@ -39,7 +39,7 @@ class PenarikanController extends Controller
         $datatable = DataTables::of($penarikan)
         ->addIndexColumn()
         ->addColumn('action', function($query){
-            $html = '<button class="btn btn-sm btn-ligt mx-1 border" onclick="modal_detil_pengajuan(\''.$query->id.'\')">Rincian '.$query->approval_bsp.'</button>';
+            $html = '<button class="btn btn-sm btn-ligt mx-1 border" onclick="modal_detil_pengajuan(\''.$query->id.'\')">Rincian</button>';
             if(Auth::user()->role == 'BSP'){
                 if($query->approval_bsp == 0 || $query->approval_bsp == 20){
                     $html .= '<a href="'.url('/penarikan/verifikasi/'.$query->id).'" class="btn btn-primary btn-sm mx-1">Verifikasi</a>';
@@ -49,11 +49,10 @@ class PenarikanController extends Controller
                 }
             }
             if(Auth::user()->id == $query->tagged_by){
+                if($query->approval_bsp == 0 || $query->approval_bsp == 21){
+                    $html .= '<a href="'.route('penarikan.edit', $query->id).'" class="btn btn-warning btn-sm mx-1">Edit</a>';
+                }
                 if($query->approval_bsp == 0){
-                    if($query->approval_bsp == 0 || $query->approval_bsp == 21){
-                        $html .= '<a href="'.route('penarikan.edit', $query->id).'" class="btn btn-warning btn-sm mx-1">Edit</a>';
-                    }
-
                     $html .= '<form method="post" action="'.route('penarikan.destroy', $query->id).'"> <input type="hidden" name="_token" value="'.csrf_token().'"> <input type="hidden" name="_method" value="DELETE"><button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
                 }
             }
