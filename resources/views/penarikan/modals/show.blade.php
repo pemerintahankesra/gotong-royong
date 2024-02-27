@@ -65,7 +65,7 @@
       <label for="bukti_tf" class="form-label">Bukti TF dari BSP</label>
       <div>
         @if($penarikan->bukti_pencairan != null)
-        <img src="{{asset('/storage/'.$penarikan->bukti_pencairan)}}" alt="" class="image-fluid">
+        <img src="{{asset('/storage/'.$penarikan->bukti_pencairan)}}" alt="" class="img-fluid">
         @else
         <i class="text-danger">Belum ada bukti TF Pencairan dari BSP</i>
         @endif
