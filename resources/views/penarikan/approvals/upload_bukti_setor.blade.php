@@ -47,6 +47,22 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4 col-lg-2">
+                  <label for="bank_tujuan" class="form-label">Bank Tujuan Pencairan</label>
+                  <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control" value="{{$penarikan->bank_tujuan_pencairan}}" readonly>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                  <label for="rekening_tujuan" class="form-label">Rekening Tujuan Pencairan</label>
+                  <input type="text" name="rekening_tujuan" id="rekening_tujuan" class="form-control mb-2" value="{{$penarikan->rekening_tujuan_pencairan}}" readonly>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <label for="surat_pengajuan" class="form-label">Surat Pengajuan Penarikan Dana</label>
+                  <div><a href="{{asset('/storage/'.$penarikan->surat_pengajuan)}}" target="_blank" rel="noopener noreferrer">File yang diupload</a></div>
+                </div>
+              </div>
+            </div>
             <div class="col-md-12 pt-2">
               <table class="table table-bordered mb-0">
                 <thead>
