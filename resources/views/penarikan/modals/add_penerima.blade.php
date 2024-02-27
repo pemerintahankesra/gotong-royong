@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
 
-<form data-action="/penarikan/rencana-realisasi/{{$kategori}}" method="post" id="formAddRealisasi">
+<form data-action="{{route('penarikan.rencana-realisasi.store', $kategori)}}" method="post" id="formAddRealisasi">
   @csrf
   <div class="col-md-12">
     <div class="row">
