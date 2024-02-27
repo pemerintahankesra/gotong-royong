@@ -58,9 +58,31 @@ class PelaporanPenarikanController extends Controller
         $detil->foto_laporan = $path_upload_laporan;
         $detil->save();
 
+        // Cek Laporan
+        $status = 1;
+        $laporan = DetilPenarikan::where('penarikan_id', $detil->penarikan_id)->get();
+        // dd($laporan);
+        foreach($laporan as $lap){
+            if($lap->foto_laporan == null){
+                $status = 0;
+            }
+        }
+
         return response()->json([
             'success' => true,
             'detil' => $detil,
+            'status_laporan' => $status,
+        ], 200);
+    }
+
+    public function finalisasi(Request $request, $penarikan_id){
+        $penarikan = Penarikan::findOrFail($penarikan_id);
+        $penarikan->status_laporan = 1;
+        $penarikan->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Laporan telah difinalisasi',
         ], 200);
     }
 }

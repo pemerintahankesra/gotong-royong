@@ -47,7 +47,7 @@ $('#formAddRealisasi').on('submit', function(event){
 $('#formUploadLaporan').on('submit', function(event){
   event.preventDefault();
   var url = $(this).attr('data-action');
-  console.log(url);
+  console.log(base_url);
   $.ajax({
     url : url,
     method: 'POST',
@@ -59,6 +59,32 @@ $('#formUploadLaporan').on('submit', function(event){
     success: function(response){
       $('#modalUploadLaporan').modal('toggle');
       $('#columnLaporan'+response.detil.id).html('<img src="/storage/'+response.detil.foto_laporan+'" alt="Laporan Realisasi Pencairan Dana" height="150px" width="auto">');
+      if(response.status_laporan == 1){
+        Swal.fire({
+          title: "Foto laporan sudah lengkap.",
+          text: "Apakah anda ingin memfinalisasi laporan anda?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Ya",
+          cancelButtonText: "Tidak",
+        }).then((result) => {
+          if(result.isConfirmed){
+            $.ajax({
+              url : base_url+'/penarikan/pelaporan/'+response.detil.penarikan_id+'/finalisasi',
+              method : 'GET',
+              success: function(response){
+                $('.btn-upload-laporan').addClass('d-none');
+                Swal.fire({
+                  icon: "success",
+                  title: "Laporan telah difinalisasi",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              } 
+            })
+          }
+        });
+      }
     }
   })
 })

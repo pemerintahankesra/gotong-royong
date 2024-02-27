@@ -71,7 +71,7 @@ function modal_realisasi(kategori){
 // Modal Rincian Pengajuan
 function modal_detil_pengajuan(id){
   $('#modalDetilPengajuan').modal('toggle');
-  $('#contentModalDetilPengajuan').load(base_url+'/penarikan/'+id);
+  $('#contentModalDetilPengajuan').load(base_url+'/penarikan/'+id+'/rincian');
 }
 
 // Modal Upload Laporan

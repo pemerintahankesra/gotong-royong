@@ -20,7 +20,7 @@ class PenarikanController extends Controller
 
     public function data(){
         $user = Auth::user();
-        $penarikan = Penarikan::select('penarikan.id', 'kec.name as kecamatan', 'kel.name as kelurahan', 'p.name as program', 'tanggal_pengajuan', 'approval_bsp', DB::raw('SUM(total_nominal) as total'))
+        $penarikan = Penarikan::select('penarikan.id', 'kec.name as kecamatan', 'kel.name as kelurahan', 'p.name as program', 'tanggal_pengajuan', 'approval_bsp', 'tagged_by', DB::raw('SUM(total_nominal) as total'))
         ->join('program as p', 'p.id', '=', 'penarikan.program_id')
         ->join('regions as kel', 'kel.id', '=', 'penarikan.tagged_by')
         ->join('regions as kec', 'kec.id', '=', 'kel.sub_id')
@@ -37,7 +37,26 @@ class PenarikanController extends Controller
         $penarikan = $penarikan->get();
 
         $datatable = DataTables::of($penarikan)
-        ->addIndexColumn();
+        ->addIndexColumn()
+        ->addColumn('action', function($query){
+            $html = '<button class="btn btn-sm btn-ligt mx-1 border" onclick="modal_detil_pengajuan(\''.$query->id.'\')">Rincian</button>';
+            if(Auth::user()->role == 'BSP'){
+                if($query->approval_bsp == 0 || $query->approval_bsp == 20){
+                    $html .= '<a href="'.url('/penarikan/verifikasi/'.$query->id).'" class="btn btn-primary btn-sm mx-1">Verifikasi</a>';
+                }
+                if($query->approval_bsp == 11){
+                    $html .= '<a href="'.url('/penarikan/verifikasi/'.$query->id.'/upload_bukti_tf').'" class="btn btn-primary btn-sm mx-1">Upload Bukti TF BSP</a>';
+                }
+            }
+            if(Auth::user()->id == $query->tagged_by){
+                if($query->approval_bsp == 0){
+                    $html .= '<a href="'.route('penarikan.edit', $query->id).'" class="btn btn-warning btn-sm mx-1">Edit</a>';
+                    $html .= '<form method="post" action="'.route('penarikan.destroy', $query->id).'"> <input type="hidden" name="_token" value="'.csrf_token().'"> <input type="hidden" name="_method" value="DELETE"><button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
+                }
+            }
+            return $html;
+        })
+        ->rawColumns(['action']);
         return $datatable->toJson();
     }
 

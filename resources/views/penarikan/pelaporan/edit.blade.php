@@ -23,7 +23,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body pt-2">
-          <form action="{{route('penarikan.verifikasi.update', $penarikan->id)}}" class="row g-2" method="POST" id="formDistribusi" enctype="multipart/form-data">
+          <form action="{{route('penarikan.pelaporan.update', $penarikan->id)}}" class="row g-2" method="POST" id="formDistribusi" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="col-md-12">
@@ -73,17 +73,14 @@
                       <span class="fst-italic">Laporan Belum Di Upload</span>
                       @endif
                     </td>
-                    <td class="text-center"><button type="button" class="btn btn-primary btn-sm" onclick="modal_upload_laporan({{$dp->id}})">Upload Laporan</button></td>
+                    <td class="text-center">@if($penarikan->status_laporan == 0)<button type="button" class="btn btn-primary btn-sm btn-upload-laporan" onclick="modal_upload_laporan({{$dp->id}})">Upload Laporan</button>@endif</td>
                   </tr>
                   @endforeach
                 </tbody>
               </table>
             </div>
-            <div class="col-md-6 d-grid">
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-            <div class="col-md-6 d-grid">
-              <a href="{{route('penarikan.index')}}" class="btn btn-light border">Kembali</a>
+            <div class="col-md-12 d-grid">
+              <a href="{{route('penarikan.pelaporan.index')}}" class="btn btn-light border">Kembali</a>
             </div>
           </form>
         </div>
@@ -126,5 +123,32 @@
       }
     });
   });
+
+  @if($penarikan->status_laporan == 0)
+  Swal.fire({
+    title: "Foto laporan sudah lengkap.",
+    text: "Apakah anda ingin memfinalisasi laporan anda?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Ya",
+    cancelButtonText: "Tidak",
+  }).then((result) => {
+    if(result.isConfirmed){
+      $.ajax({
+        url : base_url+'/penarikan/pelaporan/{{$penarikan->id}}/finalisasi',
+        method : 'GET',
+        success: function(response){
+          $('.btn-upload-laporan').addClass('d-none');
+          Swal.fire({
+            icon: "success",
+            title: "Laporan telah difinalisasi",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } 
+      })
+    }
+  });
+  @endif
 </script>
 @endsection

@@ -109,20 +109,7 @@
               html = '<span class="badge '+span+'">'+status+'</span>';
               return html;
             }},
-          {className : 'justify-content-center d-flex', render : function(data, type, row){
-            var html = '<button class="btn btn-sm btn-light mx-1" onclick="modal_detil_pengajuan('+row.id+')">Rincian</button>';
-            if(row.approval_bsp == 0 || row.approval_bsp == 20){
-              html += '<a href="'+base_url+'/penarikan/verifikasi/'+row.id+'" class="btn btn-success btn-sm mx-1">Verifikasi</a>';
-            }
-            if(row.approval_bsp == 11){
-              html += '<a href="'+base_url+'/penarikan/verifikasi/'+row.id+'/upload_bukti_tf" class="btn btn-success btn-sm mx-1">Upload Bukti TF BSP</a>';
-            }
-            if(row.approval_bsp == 0 || row.approval_bsp == 20){
-              html += '<a href="'+base_url+'/penarikan/'+row.id+'/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
-              html += '<form method="post" action="'+base_url+'/penarikan/'+row.id+'">@csrf @method("DELETE")<button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
-            }
-            return html;
-          }}
+          {className : 'justify-content-center d-flex', data: 'action', name: 'action'}
         ]
       })
     </script>

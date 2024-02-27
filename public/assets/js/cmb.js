@@ -136,7 +136,6 @@ function getDataByNIK(value){
     if(response.message == 'success'){
       let data = response.data;
       // Cek Warga Surabaya
-      console.log(data.flag_surabaya);
       if(data.flag_surabaya == 0){
         Swal.fire({
           title: 'Anda yakin?',
@@ -175,9 +174,9 @@ function getDataByNIK(value){
       $('#alamat_ktp').val(data.alamat);
       $('#kecamatan_ktp').val(data.kecamatan);
       $('#kelurahan_ktp').val(data.kelurahan);
-      $('#alamat_domisili').val(data.alamat_dom);
-      $('#kecamatan_domisili').val(data.kecamatan_dom);
-      $('#kelurahan_domisili').val(data.kelurahan_dom);
+      $('#alamat_domisili').val(data.alamat_domisili);
+      $('#kecamatan_domisili').val(data.kecamatan_domisili);
+      $('#kelurahan_domisili').val(data.kelurahan_domisili);
       $('#flag_surabaya').val(data.flag_surabaya);
     } else {
       Swal.fire({

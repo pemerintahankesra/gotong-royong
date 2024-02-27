@@ -85,8 +85,10 @@ Route::middleware('auth')->group(function(){
     // Pelaporan Penarikan
     Route::get('/pelaporan/data', [App\Http\Controllers\PelaporanPenarikanController::class, 'data'])->name('pelaporan.data');
     Route::get('/pelaporan/{id}/laporan', [App\Http\Controllers\PelaporanPenarikanController::class, 'laporan'])->name('pelaporan.laporan');
+    Route::get('/pelaporan/{penarikan_id}/finalisasi', [App\Http\Controllers\PelaporanPenarikanController::class, 'finalisasi'])->name('pelaporan.finalisasi');
     Route::resource('/pelaporan', App\Http\Controllers\PelaporanPenarikanController::class);
   });
+  Route::get('/penarikan/{id}/rincian', [App\Http\Controllers\PenarikanController::class, 'show'])->name('penarikan.show');
   Route::resource('/penarikan', App\Http\Controllers\PenarikanController::class)->except('show');
 });
 

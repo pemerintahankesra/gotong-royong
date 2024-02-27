@@ -6,7 +6,7 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="barang" class="form-label">Upload Foto Laporan</label>
-          <input type="file" name="upload_laporan" id="upload_laporan" class="form-control mb-2">
+          <input type="file" name="upload_laporan" id="upload_laporan" class="form-control mb-2" accept="image/*">
         </div>
       </div>
     </div>
