@@ -39,7 +39,7 @@ class PenarikanController extends Controller
         $datatable = DataTables::of($penarikan)
         ->addIndexColumn()
         ->addColumn('action', function($query){
-            $html = '<button class="btn btn-sm btn-ligt mx-1 border" onclick="modal_detil_pengajuan(\''.$query->id.'\')">Rincian</button>';
+            $html = '<button class="btn btn-sm btn-ligt mx-1 border" onclick="modal_detil_pengajuan(\''.$query->id.'\')">Rincian '.$query->approval_bsp.'</button>';
             if(Auth::user()->role == 'BSP'){
                 if($query->approval_bsp == 0 || $query->approval_bsp == 20){
                     $html .= '<a href="'.url('/penarikan/verifikasi/'.$query->id).'" class="btn btn-primary btn-sm mx-1">Verifikasi</a>';
