@@ -128,6 +128,7 @@ class PenarikanController extends Controller
                     $detil_penarikan->nominal = str_replace(',', '', $cart->attributes->nominal[$ia]);
                     $detil_penarikan->total_nominal = str_replace(',', '', $cart->attributes->total_nominal[$ia]);
                     $detil_penarikan->jenis = $cart->attributes->jenis;
+                    dd($detil_penarikan);
                     $detil_penarikan->save();
                 }
             } else if($cart->attributes->jenis == 'barang'){
