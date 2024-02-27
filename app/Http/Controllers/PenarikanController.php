@@ -50,7 +50,10 @@ class PenarikanController extends Controller
             }
             if(Auth::user()->id == $query->tagged_by){
                 if($query->approval_bsp == 0){
-                    $html .= '<a href="'.route('penarikan.edit', $query->id).'" class="btn btn-warning btn-sm mx-1">Edit</a>';
+                    if($query->approval_bsp == 0 || $query->approval_bsp == 21){
+                        $html .= '<a href="'.route('penarikan.edit', $query->id).'" class="btn btn-warning btn-sm mx-1">Edit</a>';
+                    }
+
                     $html .= '<form method="post" action="'.route('penarikan.destroy', $query->id).'"> <input type="hidden" name="_token" value="'.csrf_token().'"> <input type="hidden" name="_method" value="DELETE"><button class="btn btn-danger btn-sm mx-1">Hapus</button></form>';
                 }
             }

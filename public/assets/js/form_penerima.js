@@ -25,7 +25,6 @@ $('#formAddRealisasi').on('submit', function(event){
   event.preventDefault();
 
   var url = $(this).attr('data-action');
-  console.log(url);
   $.ajax({
     url: url,
     method: 'POST',
