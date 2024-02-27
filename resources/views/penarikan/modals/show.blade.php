@@ -21,19 +21,13 @@
 </div>
 <div class="col-md-12">
   <div class="row">
-    <div class="col-md-4 col-lg-2">
+    <div class="col-md-4 col-lg-3">
       <label for="bank_tujuan" class="form-label">Bank Tujuan Pencairan</label>
       <input type="text" id="bank_tujuan" class="form-control" value="{{$penarikan->bank_tujuan_pencairan}}" readonly>
     </div>
-    <div class="col-md-4 col-lg-2">
+    <div class="col-md-4 col-lg-3">
       <label for="rekening_tujuan" class="form-label">Rekening Tujuan Pencairan</label>
       <input type="text" id="rekening_tujuan" class="form-control mb-2" value="{{$penarikan->rekening_tujuan_pencairan}}" readonly>
-    </div>
-    <div class="col-md-4 col-lg-3">
-      <label for="surat_pengajuan" class="form-label">Surat Pengajuan Penarikan Dana</label>
-      <div>
-        <a href="{{asset('/storage/'.$penarikan->surat_pengajuan)}}" target="_blank" rel="noopener noreferrer">File yang diupload</a>
-      </div>
     </div>
   </div>
 </div>
@@ -58,6 +52,26 @@
       @endforeach
     </tbody>
   </table>
+</div>
+<div class="col-md-12 pt-2">
+  <div class="row">
+    <div class="col-md-4 col-lg-4">
+      <label for="surat_pengajuan" class="form-label">Surat Pengajuan Penarikan Dana</label>
+      <div>
+        <a href="{{asset('/storage/'.$penarikan->surat_pengajuan)}}" target="_blank" rel="noopener noreferrer">File yang diupload</a>
+      </div>
+    </div>
+    <div class="col-md-8 col-lg-8">
+      <label for="bukti_tf" class="form-label">Bukti TF dari BSP</label>
+      <div>
+        @if($penarikan->bukti_pencairan != null)
+        <img src="{{asset('/storage/'.$penarikan->bukti_pencairan)}}" alt="" class="image-fluid">
+        @else
+        <i class="text-danger">Belum ada bukti TF Pencairan dari BSP</i>
+        @endif
+      </div>
+    </div>
+  </div>
 </div>
 <div class="col-md-12">
   <label for="keterangan" class="form-label">Keterangan Tambahan <span class="fst-italic text-danger">(Opsional)</span></label>
