@@ -291,7 +291,7 @@ class PenarikanController extends Controller
                     $detil_penarikan->penerima_id = $penerima->id;
                     $detil_penarikan->kategori = $cart->attributes->kategori[$ia];
                     $detil_penarikan->item = $cart->attributes->item[$ia];
-                    $detil_penarikan->jumlah = $cart->attributes->jumlah[$ia];
+                    $detil_penarikan->jumlah = str_replace(',', '', $cart->attributes->jumlah[$ia]);
                     $detil_penarikan->nominal = str_replace(',', '', $cart->attributes->nominal[$ia]);
                     $detil_penarikan->total_nominal = str_replace(',', '', $cart->attributes->total_nominal[$ia]);
                     $detil_penarikan->jenis = $cart->attributes->jenis;
