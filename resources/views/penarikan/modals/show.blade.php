@@ -50,6 +50,10 @@
         <td class="text-end">{{number_format($detil->total_nominal)}}</td>
       </tr>
       @endforeach
+      <tr>
+        <td colspan="3"></td>
+        <td>{{number_format($penarikan->detil_penarikan->sum('total_nominal'))}}</td>
+      </tr>
     </tbody>
   </table>
 </div>
