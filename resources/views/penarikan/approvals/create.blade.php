@@ -51,7 +51,7 @@
               <div class="row">
                 <div class="col-md-4 col-lg-2">
                   <label for="bank_tujuan" class="form-label">Bank Tujuan Pencairan</label>
-                  <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control" value="{{$penarikan->banj_tujuan_pencairan}}" readonly>
+                  <input type="text" name="bank_tujuan" id="bank_tujuan" class="form-control" value="{{$penarikan->bank_tujuan_pencairan}}" readonly>
                 </div>
                 <div class="col-md-4 col-lg-2">
                   <label for="rekening_tujuan" class="form-label">Rekening Tujuan Pencairan</label>
