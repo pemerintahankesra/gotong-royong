@@ -104,8 +104,8 @@
           </select></td>
           <td><input type="text" name="item[]" class="form-control keterangan-bantuan" value="{{$cart->attributes->item[$i]}}"></td>
           <td><input type="text" name="jumlah[]" class="form-control jumlah-bantuan" min="1" value="{{$cart->attributes->jumlah[$i]}}"></td>
-          <td><input type="text" name="nominal[]" class="form-control nominal-bantuan" value="{{number_format($cart->attributes->nominal[$i])}}"></td>
-          <td class="align-middle text-end"><span class="total-bantuan">{{number_format($cart->attributes->total_nominal[$i])}}</span><input type="hidden" name="total_nominal[]" class="text-total-bantuan" value="{{$cart->attributes->total_nominal[$i]}}"></td>
+          <td><input type="text" name="nominal[]" class="form-control nominal-bantuan" value="{{$cart->attributes->nominal[$i]}}"></td>
+          <td class="align-middle text-end"><span class="total-bantuan">{{$cart->attributes->total_nominal[$i]}}</span><input type="hidden" name="total_nominal[]" class="text-total-bantuan" value="{{$cart->attributes->total_nominal[$i]}}"></td>
           <td class="align-middle"><button class="btn btn-danger btn-sm" onclick="deleteRow(this);">X</button></td>
         </tr>
         @endforeach

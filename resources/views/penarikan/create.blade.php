@@ -202,7 +202,7 @@
     event.preventDefault();
 
     $('#modalTambahPenerima').modal('toggle');
-    $('#contentModalPenerima').load('/penarikan/rencana-realisasi/'+kategori+'/'+id+'/edit');
+    $('#contentModalPenerima').load(base_url+'/penarikan/rencana-realisasi/'+kategori+'/'+id+'/edit');
   }
 
   function deleteRencanaRealisasi(form_id){

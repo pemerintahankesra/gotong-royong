@@ -18,6 +18,22 @@
       <input type="text" id="program" class="form-control" value="{{$penarikan->program->name}}" readonly>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-4 col-lg-4">
+      <label for="bank_tujuan" class="form-label">Bank Tujuan Pencairan</label>
+      <input type="text" id="bank_tujuan" class="form-control" value="{{$penarikan->bank_tujuan_pencairan}}" readonly>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <label for="rekening_tujuan" class="form-label">Rekening Tujuan Pencairan</label>
+      <input type="text" id="rekening_tujuan" class="form-control mb-2" value="{{$penarikan->rekening_tujuan_pencairan}}" readonly>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <label for="surat_pengajuan" class="form-label">Surat Pengajuan Penarikan Dana</label>
+      <div>
+        <a href="{{asset('/storage/'.$penarikan->surat_pengajuan)}}" target="_blank" rel="noopener noreferrer">File yang diupload</a>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="col-md-12 pt-2">
   <table class="table table-bordered mb-0" id="detil_penerima">
@@ -47,20 +63,6 @@
 </div>
 <div class="col-md-12 pt-2">
   <div class="row">
-    <div class="col-md-4 col-lg-4">
-      <label for="surat_pengajuan" class="form-label">Surat Pengajuan Penarikan Dana</label>
-      <div>
-        <a href="{{asset('/storage/'.$penarikan->surat_pengajuan)}}" target="_blank" rel="noopener noreferrer">File yang diupload</a>
-      </div>
-    </div>
-    <div class="col-md-4 col-lg-4">
-      <label for="bank_tujuan" class="form-label">Bank Tujuan Pencairan</label>
-      <input type="text" id="bank_tujuan" class="form-control" value="{{$penarikan->bank_tujuan_pencairan}}" readonly>
-    </div>
-    <div class="col-md-4 col-lg-4">
-      <label for="rekening_tujuan" class="form-label">Rekening Tujuan Pencairan</label>
-      <input type="text" id="rekening_tujuan" class="form-control mb-2" value="{{$penarikan->rekening_tujuan_pencairan}}" readonly>
-    </div>
     <div class="col-12">
       <label for="bukti_tf" class="form-label">Bukti TF dari BSP</label>
       <div>
