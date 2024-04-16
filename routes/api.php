@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::controller(App\Http\Controllers\Api\PenarikanController::class)->prefix('penarikan')->name('api.penarikan.')->group(function(){
+    Route::POST('/', 'store')->name('store');
+    Route::POST('/{id}', 'update')->name('update');
+});
